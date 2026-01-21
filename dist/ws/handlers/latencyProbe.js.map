@@ -1,0 +1,1 @@
+{"version":3,"file":"latencyProbe.js","sourceRoot":"","sources":["../../../src/ws/handlers/latencyProbe.ts"],"names":[],"mappings":";;AAOA,gDAOC;AAZD;;;;GAIG;AACH,SAAgB,kBAAkB,CAAC,EAAO,EAAE,OAA4B;IACtE,WAAW;IACX,EAAE,CAAC,IAAI,CAAC,IAAI,CAAC,SAAS,CAAC;QACrB,IAAI,EAAE,wBAAwB;QAC9B,SAAS,EAAE,IAAI,CAAC,GAAG,EAAE;QACrB,eAAe,EAAE,OAAO,CAAC,SAAS;KACnC,CAAC,CAAC,CAAC;AACN,CAAC"}
