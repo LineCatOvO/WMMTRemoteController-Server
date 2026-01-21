@@ -47,6 +47,8 @@ export interface InputDelta {
 
 // 输入状态接口
 export interface InputState {
+  frameId?: number;
+  runtimeStatus?: 'ok' | 'degraded' | 'rollback';
   keyboard: Set<string>;
   mouse: {
     x: number;
@@ -80,6 +82,8 @@ export interface WelcomeMessage extends WsMessage {
 export interface InputMessage extends WsMessage {
   type: 'input';
   data: {
+    frameId?: number;
+    runtimeStatus?: 'ok' | 'degraded' | 'rollback';
     keyboard?: string[];
     mouse?: {
       x?: number;
