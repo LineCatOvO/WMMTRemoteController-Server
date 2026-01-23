@@ -3,6 +3,7 @@ import { inputState } from './state';
 import { KeyboardExecutor } from './keyboard';
 import { MouseExecutor } from './mouse';
 import { JoystickExecutor } from './joystick';
+import { SafetyController } from './safetyController';
 import { InputExecutor, InputExecutorManager } from './interfaces';
 
 /**
@@ -67,17 +68,44 @@ executorManager.addExecutor(new KeyboardExecutor());
 executorManager.addExecutor(new MouseExecutor());
 executorManager.addExecutor(new JoystickExecutor());
 
+// 创建安全控制器
+const safetyController = new SafetyController(executorManager);
+
+// 存储输入执行循环定时器ID
+let inputExecutorInterval: NodeJS.Timeout | null = null;
+
 /**
  * 开始输入执行循环
  * @returns 定时器ID，用于后续清理
  */
 export function startInputExecutor() {
+  // 如果已经在运行，则先停止
+  if (inputExecutorInterval) {
+    clearInterval(inputExecutorInterval);
+  }
+  
   console.log(`Starting input executor with interval: ${config.inputUpdateInterval}ms`);
   
   // 输入执行循环（125Hz）
-  return setInterval(() => {
+  inputExecutorInterval = setInterval(() => {
     executeInput();
   }, config.inputUpdateInterval);
+  
+  return inputExecutorInterval;
+}
+
+/**
+ * 停止输入执行循环
+ */
+export function stopInputExecutor() {
+  if (inputExecutorInterval) {
+    clearInterval(inputExecutorInterval);
+    inputExecutorInterval = null;
+    console.log('Input executor stopped');
+  }
+  
+  // 停止安全控制器的超时检查
+  safetyController.stopTimeoutCheck();
 }
 
 /**
@@ -86,6 +114,9 @@ export function startInputExecutor() {
 function executeInput() {
   // 应用当前输入状态到所有执行器
   executorManager.applyState(inputState);
+  
+  // 记录有效状态时间
+  safetyController.recordValidState(inputState);
 }
 
 /**
@@ -94,4 +125,42 @@ function executeInput() {
  */
 export function getExecutorManager(): InputExecutorManager {
   return executorManager;
+}
+
+/**
+ * 获取安全控制器
+ * @returns 安全控制器实例
+ */
+export function getSafetyController(): SafetyController {
+  return safetyController;
+}
+
+/**
+ * 触发安全清零
+ */
+export function triggerSafetyClear(): void {
+  safetyController.triggerSafetyClear();
+}
+
+/**
+ * 触发异常清零
+ * @param reason 异常原因
+ */
+export function triggerExceptionClear(reason: string): void {
+  safetyController.triggerExceptionClear(reason);
+}
+
+/**
+ * 处理WebSocket断开连接
+ */
+export function handleDisconnect(): void {
+  safetyController.handleDisconnect();
+}
+
+/**
+ * 记录有效状态
+ * @param state 有效状态
+ */
+export function recordValidState(state: any): void {
+  safetyController.recordValidState(state);
 }

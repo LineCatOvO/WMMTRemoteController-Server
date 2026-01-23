@@ -1,3 +1,4 @@
+import { SafetyController } from './safetyController';
 import { InputExecutor, InputExecutorManager } from './interfaces';
 /**
  * 输入执行器管理器实现
@@ -44,4 +45,27 @@ export declare function startInputExecutor(): NodeJS.Timeout;
  * @returns 输入执行器管理器实例
  */
 export declare function getExecutorManager(): InputExecutorManager;
+/**
+ * 获取安全控制器
+ * @returns 安全控制器实例
+ */
+export declare function getSafetyController(): SafetyController;
+/**
+ * 触发安全清零
+ */
+export declare function triggerSafetyClear(): void;
+/**
+ * 触发异常清零
+ * @param reason 异常原因
+ */
+export declare function triggerExceptionClear(reason: string): void;
+/**
+ * 处理WebSocket断开连接
+ */
+export declare function handleDisconnect(): void;
+/**
+ * 记录有效状态
+ * @param state 有效状态
+ */
+export declare function recordValidState(state: any): void;
 //# sourceMappingURL=executor.d.ts.map

@@ -3,11 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DefaultInputExecutorManager = void 0;
 exports.startInputExecutor = startInputExecutor;
 exports.getExecutorManager = getExecutorManager;
+exports.getSafetyController = getSafetyController;
+exports.triggerSafetyClear = triggerSafetyClear;
+exports.triggerExceptionClear = triggerExceptionClear;
+exports.handleDisconnect = handleDisconnect;
+exports.recordValidState = recordValidState;
 const config_1 = require("../config/config");
 const state_1 = require("./state");
 const keyboard_1 = require("./keyboard");
 const mouse_1 = require("./mouse");
 const joystick_1 = require("./joystick");
+const safetyController_1 = require("./safetyController");
 /**
  * 输入执行器管理器实现
  */
@@ -64,6 +70,8 @@ const executorManager = new DefaultInputExecutorManager();
 executorManager.addExecutor(new keyboard_1.KeyboardExecutor());
 executorManager.addExecutor(new mouse_1.MouseExecutor());
 executorManager.addExecutor(new joystick_1.JoystickExecutor());
+// 创建安全控制器
+const safetyController = new safetyController_1.SafetyController(executorManager);
 /**
  * 开始输入执行循环
  * @returns 定时器ID，用于后续清理
@@ -81,6 +89,8 @@ function startInputExecutor() {
 function executeInput() {
     // 应用当前输入状态到所有执行器
     executorManager.applyState(state_1.inputState);
+    // 记录有效状态时间
+    safetyController.recordValidState(state_1.inputState);
 }
 /**
  * 获取输入执行器管理器
@@ -88,5 +98,38 @@ function executeInput() {
  */
 function getExecutorManager() {
     return executorManager;
+}
+/**
+ * 获取安全控制器
+ * @returns 安全控制器实例
+ */
+function getSafetyController() {
+    return safetyController;
+}
+/**
+ * 触发安全清零
+ */
+function triggerSafetyClear() {
+    safetyController.triggerSafetyClear();
+}
+/**
+ * 触发异常清零
+ * @param reason 异常原因
+ */
+function triggerExceptionClear(reason) {
+    safetyController.triggerExceptionClear(reason);
+}
+/**
+ * 处理WebSocket断开连接
+ */
+function handleDisconnect() {
+    safetyController.handleDisconnect();
+}
+/**
+ * 记录有效状态
+ * @param state 有效状态
+ */
+function recordValidState(state) {
+    safetyController.recordValidState(state);
 }
 //# sourceMappingURL=executor.js.map

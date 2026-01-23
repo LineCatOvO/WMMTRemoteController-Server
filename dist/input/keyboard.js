@@ -73,21 +73,30 @@ class KeyboardExecutor {
         const keysToPress = new Set([...newState].filter(key => !this.currentKeyboardState.has(key)));
         // 找出移除的按键（需要释放）
         const keysToRelease = new Set([...this.currentKeyboardState].filter(key => !newState.has(key)));
-        // 执行按键按下
-        if (keysToPress.size > 0) {
-            const keysArray = Array.from(keysToPress);
-            console.log('Pressing keys:', keysArray);
+        // 先释放需要释放的键
+        if (keysToRelease.size > 0) {
+            // 注意：对于需要持续按住的按键，我们需要使用不同的方法
+            // 当前使用的node-key-sender库不支持持续按键，这里我们先清空所有按键，然后重新按下需要的键
+            console.log('Releasing keys:', Array.from(keysToRelease));
+            // 清空所有按键（通过重置当前状态）
+            this.currentKeyboardState.clear();
+        }
+        // 然后按下需要按下的键
+        if (keysToPress.size > 0 || this.currentKeyboardState.size === 0) {
+            // 如果需要按下新键，或者当前状态为空（刚刚清空），则重新按下所有需要的键
+            const keysToPressAll = Array.from(newState);
+            console.log('Pressing keys:', keysToPressAll);
             try {
-                // node-key-sender 的 sendKey 方法支持单个键或键数组
-                keySender.sendKey(keysArray);
+                // 对于持续按键，我们需要使用不同的库或方法
+                // 这里使用node-key-sender的sendKey方法，它会自动释放，但对于某些游戏可能有效
+                if (keysToPressAll.length > 0) {
+                    keySender.sendKey(keysToPressAll);
+                }
             }
             catch (error) {
                 console.error('Error pressing keys:', error);
             }
         }
-        // 注意：node-key-sender 没有直接的释放键方法，
-        // 它会自动释放按键。对于需要持续按住的情况，
-        // 我们需要使用其他库或方法。
         // 更新当前键盘状态
         this.currentKeyboardState = newState;
     }

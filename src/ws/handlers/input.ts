@@ -1,5 +1,4 @@
 import { InputMessage } from '../../types/ws';
-import { inputState } from '../../input/state';
 
 /**
  * 处理输入消息
@@ -7,29 +6,57 @@ import { inputState } from '../../input/state';
  * @param message 输入消息
  */
 export function handleInput(ws: any, message: InputMessage) {
-  // 更新输入状态
-  if (message.data.keyboard) {
-    // 更新键盘状态
-    inputState.keyboard = new Set(message.data.keyboard);
+  // 获取全局状态存储实例
+  const stateStore = (global as any).stateStore;
+  
+  // 检查状态存储是否可用
+  if (!stateStore) {
+    console.error('StateStore not available');
+    return;
   }
   
-  if (message.data.mouse) {
-    // 更新鼠标状态
-    inputState.mouse = { ...inputState.mouse, ...message.data.mouse };
-  }
+  // 存储状态
+  const stored = stateStore.storeState(message.data);
   
-  if (message.data.joystick) {
-    // 更新摇杆状态
-    inputState.joystick = { ...inputState.joystick, ...message.data.joystick };
-  }
-  
-  if (message.data.gyroscope) {
-    // 更新陀螺仪状态
-    inputState.gyroscope = { ...inputState.gyroscope, ...message.data.gyroscope };
-  }
-  
-  // 处理metadata（目前仅记录日志）
-  if (message.metadata) {
-    console.log(`Input received from ${message.metadata.clientId} at ${message.metadata.timestamp}`);
+  if (stored) {
+    // 处理metadata
+    if (message.metadata) {
+      console.log(`Input received from ${message.metadata.clientId} at ${message.metadata.timestamp}`);
+    }
+    
+    // 发送ACK消息
+    const ackMessage = {
+      type: 'ack',
+      data: {
+        sequenceNumber: message.data?.frameId || Date.now(),
+        timestamp: Date.now(),
+        status: 'success'
+      }
+    };
+    
+    try {
+      ws.send(JSON.stringify(ackMessage));
+      console.log(`ACK sent for sequence ${message.data?.frameId || Date.now()}`);
+    } catch (error) {
+      console.error('Error sending ACK:', error);
+    }
+  } else {
+    // 发送错误ACK消息
+    const errorAckMessage = {
+      type: 'ack',
+      data: {
+        sequenceNumber: message.data?.frameId || Date.now(),
+        timestamp: Date.now(),
+        status: 'error',
+        reason: 'Invalid state'
+      }
+    };
+    
+    try {
+      ws.send(JSON.stringify(errorAckMessage));
+      console.error(`Error ACK sent for sequence ${message.data?.frameId || Date.now()}`);
+    } catch (error) {
+      console.error('Error sending error ACK:', error);
+    }
   }
 }
