@@ -146,14 +146,20 @@ class SafetyController {
         return this.lastValidStateTime;
     }
     /**
-     * 销毁安全控制器
+     * 停止超时检查
      */
-    destroy() {
-        // 清除超时定时器
+    stopTimeoutCheck() {
         if (this.timeoutTimer) {
             clearInterval(this.timeoutTimer);
             this.timeoutTimer = null;
         }
+    }
+    /**
+     * 销毁安全控制器
+     */
+    destroy() {
+        // 清除超时定时器
+        this.stopTimeoutCheck();
         console.log('SafetyController: Destroyed, total clears:', this.clearCount);
     }
 }

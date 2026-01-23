@@ -41,6 +41,10 @@ export declare class DefaultInputExecutorManager implements InputExecutorManager
  */
 export declare function startInputExecutor(): NodeJS.Timeout;
 /**
+ * 停止输入执行循环
+ */
+export declare function stopInputExecutor(): void;
+/**
  * 获取输入执行器管理器
  * @returns 输入执行器管理器实例
  */

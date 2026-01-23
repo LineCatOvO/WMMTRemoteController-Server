@@ -87,7 +87,11 @@ class StateStore {
         if (!state)
             return false;
         // 验证必要字段
-        // 根据具体需求添加更多验证逻辑
+        // InputState requires keyboard, mouse, joystick, and gyroscope fields
+        if (!state.keyboard || !state.mouse || !state.joystick || !state.gyroscope) {
+            return false;
+        }
+        // frameId is optional but recommended, so we don't validate it here
         return true;
     }
     /**
@@ -106,9 +110,15 @@ class StateStore {
      * @returns 是否有效
      */
     isValidSequenceNumber(sequenceNumber) {
-        // 序列号必须大于或等于最后应用的序列号
-        // 允许跳过序列号（网络丢包情况）
-        return sequenceNumber >= this.lastAppliedSequenceNumber;
+        // If no state has been stored yet, any sequence number is valid
+        if (!this.latestState) {
+            return true;
+        }
+        // Get the sequence number of the latest stored state
+        const latestSequenceNumber = this.extractSequenceNumber(this.latestState);
+        // 序列号必须大于最后存储的序列号
+        // 不允许相同或更小的序列号
+        return sequenceNumber > latestSequenceNumber;
     }
     /**
      * 获取状态历史记录

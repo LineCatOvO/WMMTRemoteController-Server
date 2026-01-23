@@ -73,6 +73,10 @@ export declare class SafetyController {
      */
     getLastValidStateTime(): number;
     /**
+     * 停止超时检查
+     */
+    stopTimeoutCheck(): void;
+    /**
      * 销毁安全控制器
      */
     destroy(): void;

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DefaultInputExecutorManager = void 0;
 exports.startInputExecutor = startInputExecutor;
+exports.stopInputExecutor = stopInputExecutor;
 exports.getExecutorManager = getExecutorManager;
 exports.getSafetyController = getSafetyController;
 exports.triggerSafetyClear = triggerSafetyClear;
@@ -72,16 +73,35 @@ executorManager.addExecutor(new mouse_1.MouseExecutor());
 executorManager.addExecutor(new joystick_1.JoystickExecutor());
 // 创建安全控制器
 const safetyController = new safetyController_1.SafetyController(executorManager);
+// 存储输入执行循环定时器ID
+let inputExecutorInterval = null;
 /**
  * 开始输入执行循环
  * @returns 定时器ID，用于后续清理
  */
 function startInputExecutor() {
+    // 如果已经在运行，则先停止
+    if (inputExecutorInterval) {
+        clearInterval(inputExecutorInterval);
+    }
     console.log(`Starting input executor with interval: ${config_1.config.inputUpdateInterval}ms`);
     // 输入执行循环（125Hz）
-    return setInterval(() => {
+    inputExecutorInterval = setInterval(() => {
         executeInput();
     }, config_1.config.inputUpdateInterval);
+    return inputExecutorInterval;
+}
+/**
+ * 停止输入执行循环
+ */
+function stopInputExecutor() {
+    if (inputExecutorInterval) {
+        clearInterval(inputExecutorInterval);
+        inputExecutorInterval = null;
+        console.log('Input executor stopped');
+    }
+    // 停止安全控制器的超时检查
+    safetyController.stopTimeoutCheck();
 }
 /**
  * 执行输入
