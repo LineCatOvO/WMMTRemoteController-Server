@@ -34,8 +34,8 @@ describe('State Update and Coverage Tests', () => {
   });
 
   test('should store and retrieve the latest state', () => {
-    const state1 = TestUtils.createTestState(1, ['W']);
-    const state2 = TestUtils.createTestState(2, ['A']);
+    const state1 = TestUtils.createTestStateWithKeyboard(1, ['W']);
+    const state2 = TestUtils.createTestStateWithKeyboard(2, ['A']);
 
     // Store first state
     const stored1 = stateStore.storeState(state1);
@@ -49,9 +49,9 @@ describe('State Update and Coverage Tests', () => {
   });
 
   test('should handle sequence numbers correctly', () => {
-    const state1 = TestUtils.createTestState(100, ['W']);
-    const state2 = TestUtils.createTestState(101, ['A']);
-    const state3 = TestUtils.createTestState(100, ['S']);
+    const state1 = TestUtils.createTestStateWithKeyboard(100, ['W']);
+    const state2 = TestUtils.createTestStateWithKeyboard(101, ['A']);
+    const state3 = TestUtils.createTestStateWithKeyboard(100, ['S']);
 
     // Store states with increasing sequence numbers
     expect(stateStore.storeState(state1)).toBe(true);
@@ -65,15 +65,14 @@ describe('State Update and Coverage Tests', () => {
 
   test('should treat missing fields as zero state', () => {
     // First state with all fields
-    const fullState = TestUtils.createInputState({
-      frameId: 1,
+    const fullState = TestUtils.createCompleteInputState(1, {
       keyboard: new Set(['W', 'A']),
       mouse: { x: 100, y: 200, left: true, right: false, middle: false },
       joystick: { x: 0.5, y: -0.5, deadzone: 0, smoothing: 0 }
     });
 
     // Second state with only keyboard field (others should be zeroed)
-    const partialState = TestUtils.createTestState(2, ['S']);
+    const partialState = TestUtils.createTestStateWithKeyboard(2, ['S']);
 
     expect(stateStore.storeState(fullState)).toBe(true);
     expect(stateStore.storeState(partialState)).toBe(true);
@@ -83,8 +82,8 @@ describe('State Update and Coverage Tests', () => {
   });
 
   test('should reset to zero state when empty state is sent', () => {
-    const initialState = TestUtils.createTestState(1, ['W']);
-    const emptyState = TestUtils.createTestState(2);
+    const initialState = TestUtils.createTestStateWithKeyboard(1, ['W']);
+    const emptyState = TestUtils.createTestStateWithKeyboard(2, []);
 
     expect(stateStore.storeState(initialState)).toBe(true);
     expect(stateStore.getLatestState()).toEqual(initialState);
@@ -103,12 +102,17 @@ describe('State Update and Coverage Tests', () => {
     expect(stateStore.getLatestState()).toBeNull();
 
     // Invalid state (non-numeric frameId)
-    const invalidFrameState = TestUtils.createInputState({
-      frameId: 'abc' as any, // Cast to any to bypass TypeScript type checking for test
+    const invalidFrameState = TestUtils.createCompleteInputState(NaN, {
       keyboard: new Set(['W'])
     });
-    // Note: This will pass validation because it has all required fields, only frameId is invalid
-    // The frameId validation happens in extractSequenceNumber, which falls back to Date.now() if frameId is invalid
-    expect(stateStore.storeState(invalidFrameState)).toBe(true);
+    // 非数字frameId应该被拒绝
+    expect(stateStore.storeState(invalidFrameState)).toBe(false);
+    expect(stateStore.getLatestState()).toBeNull();
+
+    // Invalid state (undefined frameId)
+    const noFrameIdState = TestUtils.createMinimalInputState();
+    // 缺少frameId应该被拒绝
+    expect(stateStore.storeState(noFrameIdState)).toBe(false);
+    expect(stateStore.getLatestState()).toBeNull();
   });
 });

@@ -36,5 +36,23 @@ export function validateConfig(config: Partial<Config>): config is Config {
     return false;
   }
   
+  // 验证默认端口
+  if (config.defaultPort !== undefined && 
+      (typeof config.defaultPort !== 'number' || config.defaultPort <= 0 || config.defaultPort >= 65536)) {
+    return false;
+  }
+  
+  // 验证端口范围
+  if (config.portRange !== undefined && 
+      (typeof config.portRange !== 'number' || config.portRange <= 0 || config.portRange >= 100)) {
+    return false;
+  }
+  
+  // 验证测试模式
+  if (config.isTestMode !== undefined && 
+      typeof config.isTestMode !== 'boolean') {
+    return false;
+  }
+  
   return true;
 }

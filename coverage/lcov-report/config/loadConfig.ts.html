@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for ws/handlers/config.ts</title>
+    <title>Code coverage report for config/loadConfig.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">ws/handlers</a> config.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">config</a> loadConfig.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">56% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>14/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">18.18% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>2/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">54.16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>13/24</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -112,7 +112,20 @@
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,8 +135,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -133,84 +175,75 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ConfigGetMessage, ConfigSetMessage } from '../../types/ws';
-import { config } from '../../config/config';
-import { validateConfig } from '../../config/validate';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as fs from 'fs';
+import * as path from 'path';
+import { Config } from '../types/ws';
+import { config as defaultConfig } from './config';
+import { validateConfig } from './validate';
 &nbsp;
 /**
- * 处理配置获取消息
- * @param ws WebSocket连接
- * @param message 配置获取消息
+ * 从文件加载配置
+ * @param configPath 配置文件路径
+ * @returns 合并后的配置对象
  */
-export function <span class="fstat-no" title="function not covered" >handleConfigGet(</span>ws: any, message: ConfigGetMessage) {
-  // 发送当前配置
-<span class="cstat-no" title="statement not covered" >  ws.send(JSON.stringify({ type: 'config', data: config }));</span>
+export function loadConfigFromFile(configPath?: string): Config {
+  let loadedConfig: Partial&lt;Config&gt; = {};
+  
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (configPath) {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      // 解析绝对路径
+      const absolutePath = <span class="cstat-no" title="statement not covered" >path.isAbsolute(configPath) ? configPath : path.resolve(process.cwd(), configPath);</span>
+      
+      // 检查文件是否存在
+<span class="cstat-no" title="statement not covered" >      if (fs.existsSync(absolutePath)) {</span>
+        // 读取并解析配置文件
+        const configContent = <span class="cstat-no" title="statement not covered" >fs.readFileSync(absolutePath, 'utf8');</span>
+        const parsedConfig = <span class="cstat-no" title="statement not covered" >JSON.parse(configContent);</span>
+        
+        // 验证配置有效性
+<span class="cstat-no" title="statement not covered" >        if (validateConfig(parsedConfig)) {</span>
+<span class="cstat-no" title="statement not covered" >          loadedConfig = parsedConfig;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          console.warn(`Invalid configuration in file: ${absolutePath}, using default config`);</span>
+        }
+      } else {
+<span class="cstat-no" title="statement not covered" >        console.warn(`Config file not found: ${absolutePath}, using default config`);</span>
+      }
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      console.error(`Error loading config file: ${error}, using default config`);</span>
+    }
+  }
+  
+  // 合并默认配置和加载的配置
+  return {
+    ...defaultConfig,
+    ...loadedConfig
+  };
 }
 &nbsp;
 /**
- * 处理配置设置消息
- * @param ws WebSocket连接
- * @param message 配置设置消息
+ * 解析命令行参数，获取配置文件路径
+ * @returns 配置文件路径，如果没有指定则返回undefined
  */
-export function <span class="fstat-no" title="function not covered" >handleConfigSet(</span>ws: any, message: ConfigSetMessage) {
-  // 合并新配置到当前配置
-  const updatedConfig = <span class="cstat-no" title="statement not covered" >{ ...config, ...message.data };</span>
-  
-  // 验证配置有效性
-<span class="cstat-no" title="statement not covered" >  if (validateConfig(updatedConfig)) {</span>
-    // 应用新配置
-<span class="cstat-no" title="statement not covered" >    Object.assign(config, updatedConfig);</span>
-    
-    // 发送确认消息
-<span class="cstat-no" title="statement not covered" >    ws.send(JSON.stringify({ </span>
-      type: 'config_ack', 
-      message: 'Config updated successfully',
-      data: config 
-    }));
-    
-<span class="cstat-no" title="statement not covered" >    console.log('Config updated:', config);</span>
-    
-    // 如果更新了输入更新间隔，需要重新设置定时器
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.inputUpdateInterval &amp;&amp; message.data.inputUpdateInterval !== config.inputUpdateInterval) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`Input update interval changed to ${config.inputUpdateInterval}ms`);</span>
-      // 注意：在实际实现中，需要保存定时器ID以便清除和重新创建
+export function getConfigPathFromArgs(): string | undefined {
+  // 简单的命令行参数解析，查找 --config 或 -c 参数
+  const args = process.argv.slice(2);
+  for (let i = 0; i &lt; args.length; i++) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ((args[i] === '--config' || args[i] === '-c') &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >i &lt; args.length - 1)</span> {
+<span class="cstat-no" title="statement not covered" >      return args[i + 1];</span>
     }
-  } else {
-    // 配置无效，发送错误消息
-<span class="cstat-no" title="statement not covered" >    ws.send(JSON.stringify({ </span>
-      type: 'config_error', 
-      message: 'Invalid configuration' 
-    }));
   }
-}</pre></td></tr></table></pre>
+  return undefined;
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
@@ -219,14 +252,14 @@ export function <span class="fstat-no" title="function not covered" >handleConfi
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at 2026-01-23T09:57:36.579Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

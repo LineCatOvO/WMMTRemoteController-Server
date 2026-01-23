@@ -1,9 +1,12 @@
 // 使用正确的ws导入方式
 const WebSocket = require('ws');
 import { handleConnection } from './connection';
+import { loadConfigFromFile, getConfigPathFromArgs } from '../config/loadConfig';
 
 let wss: any = null;
 let actualPort: number = 0;
+// 加载配置
+const config = loadConfigFromFile(getConfigPathFromArgs());
 
 /**
  * 创建并启动WebSocket服务器
@@ -12,11 +15,21 @@ let actualPort: number = 0;
 export function startWsServer(): Promise<number> {
   return new Promise((resolve, reject) => {
     try {
-      // 初始端口
-      let port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+      let startPort: number;
+      
+      // 根据配置决定起始端口策略
+      if (config.isTestMode) {
+        // 测试模式：随机选择端口范围（10000-60000之间）
+        startPort = Math.floor(Math.random() * 50000) + 10000;
+        console.log(`Test mode: Using random start port ${startPort}`);
+      } else {
+        // 生产模式：使用配置的默认端口
+        startPort = process.env.PORT ? parseInt(process.env.PORT, 10) : config.defaultPort;
+        console.log(`Production mode: Using configured start port ${startPort}`);
+      }
       
       // 尝试启动服务器，如果端口被占用则自动重试
-      const tryStartServer = (currentPort: number) => {
+      const tryStartServer = (currentPort: number, attempt: number = 0) => {
         wss = new WebSocket.WebSocketServer({ port: currentPort });
         
         wss.on('listening', () => {
@@ -30,11 +43,11 @@ export function startWsServer(): Promise<number> {
           if (error.code === 'EADDRINUSE') {
             console.debug(`Port ${currentPort} is already in use, trying port ${currentPort + 1}`);
             wss.close();
-            // 尝试下一个端口，但最多尝试5次
-            if (currentPort - port < 5) {
-              tryStartServer(currentPort + 1);
+            // 尝试下一个端口，最多尝试配置的端口范围次数
+            if (attempt < config.portRange) {
+              tryStartServer(currentPort + 1, attempt + 1);
             } else {
-              console.error('WebSocket server error: Failed to find available port after 5 attempts');
+              console.error(`WebSocket server error: Failed to find available port after ${config.portRange} attempts`);
               reject(error);
             }
           } else {
@@ -56,7 +69,7 @@ export function startWsServer(): Promise<number> {
         });
       };
       
-      tryStartServer(port);
+      tryStartServer(startPort);
     } catch (error) {
       console.error('Error creating WebSocket server:', error);
       reject(error);

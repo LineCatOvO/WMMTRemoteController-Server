@@ -74,4 +74,37 @@ describe('Startup Phase Tests', () => {
     applyScheduler.start();
     expect(applyScheduler.isRunning()).toBe(true);
   });
+
+  test('should tick at expected interval', async () => {
+    startInputExecutor();
+    const executorManager = getExecutorManager();
+    stateStore = new StateStore();
+    // 使用较短的间隔以便测试更快完成
+    applyScheduler = new ApplyScheduler(executorManager, stateStore, { applyIntervalMs: 20 });
+    
+    let tickCount = 0;
+    const expectedTicks = 3;
+    
+    // 添加tick回调
+    const tickCallback = () => {
+      tickCount++;
+    };
+    applyScheduler.addTickCallback(tickCallback);
+    
+    // 启动调度器
+    applyScheduler.start();
+    
+    // 等待足够的时间让调度器运行预期的tick数
+    await new Promise(resolve => setTimeout(resolve, expectedTicks * 20 + 20)); // 20ms per tick + 20ms buffer
+    
+    // 停止调度器
+    applyScheduler.stop();
+    
+    // 移除tick回调
+    applyScheduler.removeTickCallback(tickCallback);
+    
+    // 验证tick计数，应该至少有expectedTicks个tick
+    expect(tickCount).toBeGreaterThanOrEqual(expectedTicks);
+    expect(tickCount).toBeLessThanOrEqual(expectedTicks + 1); // 允许1个额外的tick
+  });
 });

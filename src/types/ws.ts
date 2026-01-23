@@ -206,6 +206,9 @@ export interface Config {
   pingInterval: number;
   safeStateTimeout: number;
   enableLogging: boolean;
+  defaultPort: number;
+  portRange: number;
+  isTestMode: boolean;
 }
 
 // 客户端消息联合类型

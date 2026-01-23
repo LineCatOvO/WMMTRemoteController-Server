@@ -127,12 +127,13 @@ export class StateStore {
   /**
    * 提取序列号
    * @param state 状态对象
-   * @returns 序列号
+   * @returns 序列号，如果frameId不是数字则返回NaN
    */
   private extractSequenceNumber(state: InputState): number {
-    // 这里假设state中有frameId字段作为序列号
-    // 如果没有，则使用时间戳作为序列号
-    return (state as any).frameId || Date.now();
+    // 只接受数字frameId作为序列号
+    // 如果frameId不是数字，则返回NaN
+    const frameId = (state as any).frameId;
+    return typeof frameId === 'number' ? frameId : NaN;
   }
   
   /**
@@ -141,6 +142,11 @@ export class StateStore {
    * @returns 是否有效
    */
   private isValidSequenceNumber(sequenceNumber: number): boolean {
+    // 如果序列号不是数字，直接拒绝
+    if (isNaN(sequenceNumber)) {
+      return false;
+    }
+    
     // If no state has been stored yet, any sequence number is valid
     if (!this.latestState) {
       return true;

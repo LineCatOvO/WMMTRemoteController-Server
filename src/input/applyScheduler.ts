@@ -32,6 +32,9 @@ export class ApplyScheduler {
   // 应用计数
   private applyCount = 0;
   
+  // Tick回调列表，用于测试
+  private tickCallbacks: Array<() => void> = [];
+  
   /**
    * 构造函数
    * @param executorManager 执行器管理器
@@ -49,6 +52,22 @@ export class ApplyScheduler {
       applyIntervalMs: 8, // 默认8ms，对应125Hz
       ...config
     };
+  }
+  
+  /**
+   * 添加tick回调，用于测试
+   * @param callback 回调函数
+   */
+  addTickCallback(callback: () => void): void {
+    this.tickCallbacks.push(callback);
+  }
+  
+  /**
+   * 移除tick回调，用于测试
+   * @param callback 回调函数
+   */
+  removeTickCallback(callback: () => void): void {
+    this.tickCallbacks = this.tickCallbacks.filter(cb => cb !== callback);
   }
   
   /**
@@ -91,6 +110,9 @@ export class ApplyScheduler {
    */
   private applyCurrentState(): void {
     try {
+      // 调用tick回调
+      this.tickCallbacks.forEach(callback => callback());
+      
       // 获取最新状态
       const latestState = this.stateStore.getLatestState();
       

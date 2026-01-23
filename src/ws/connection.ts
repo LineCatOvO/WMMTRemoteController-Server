@@ -21,7 +21,12 @@ export function handleConnection(ws: any) {
       
       // 检查消息是否为null或undefined
       if (message === null || message === undefined) {
-        console.debug('Ignoring null or undefined message:', data);
+        console.error('Error: Received null/undefined message after parsing', {
+          originalData: data,
+          parsedMessage: message,
+          messageStr: messageStr,
+          timestamp: new Date().toISOString()
+        });
         return;
       }
       
@@ -39,17 +44,16 @@ export function handleConnection(ws: any) {
   
   // 客户端断开连接
   ws.on('close', () => {
-    // 在测试环境中，避免在服务器关闭后执行日志和模块操作
-    // 只在正常运行时执行这些操作
-    if (process.env.NODE_ENV !== 'test') {
-      if (typeof console !== 'undefined') {
+    if (typeof console !== 'undefined') {
+      // 只在非测试环境中打印日志，避免测试输出混乱
+      if (process.env.NODE_ENV !== 'test') {
         console.log('Client disconnected');
-        // 回退到安全状态
-        try {
-          revertToSafeState();
-        } catch (error) {
-          console.debug('Failed to revert to safe state:', error);
-        }
+      }
+      // 回退到安全状态，无论是否在测试环境中
+      try {
+        revertToSafeState();
+      } catch (error) {
+        console.debug('Failed to revert to safe state:', error);
       }
     }
   });
@@ -64,9 +68,12 @@ export function handleConnection(ws: any) {
  * 回退到安全状态
  */
 function revertToSafeState() {
-  // 避免在测试环境销毁后执行日志和导入
+  // 避免在测试环境销毁后执行日志
   if (typeof console !== 'undefined') {
-    console.log('Reverting to safe state');
+    // 只在非测试环境中打印日志，避免测试输出混乱
+    if (process.env.NODE_ENV !== 'test') {
+      console.log('Reverting to safe state');
+    }
     // 导入需要在运行时使用的模块，避免循环依赖
     try {
       // 检查是否能安全访问模块系统
@@ -79,10 +86,11 @@ function revertToSafeState() {
           inputState.keyboard = new Set(safeState.keyboard);
           inputState.mouse = { ...safeState.mouse };
           inputState.joystick = { ...safeState.joystick };
+          inputState.gyroscope = { ...safeState.gyroscope };
         }
       }
     } catch (error) {
-      console.debug('Failed to revert to safe state (possibly test environment destroyed):', error);
+      console.debug('Failed to revert to safe state:', error);
     }
   }
 }
