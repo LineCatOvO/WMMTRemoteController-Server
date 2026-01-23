@@ -1,15 +1,16 @@
 import { WsClient } from '../common/wsClient';
-import { startWsServer, stopWsServer } from '../../src/ws/server';
+import { startWsServer, stopWsServer, getActualPort } from '../../src/ws/server';
 
 describe('WebSocket Connection Tests', () => {
   let client: WsClient;
+  let serverPort: number;
 
-  beforeAll(() => {
-    startWsServer();
+  beforeAll(async () => {
+    serverPort = await startWsServer();
   });
 
-  afterAll(() => {
-    stopWsServer();
+  afterAll(async () => {
+    await stopWsServer();
   });
 
   afterEach(() => {
@@ -19,14 +20,14 @@ describe('WebSocket Connection Tests', () => {
   });
 
   test('should establish WebSocket connection successfully', async () => {
-    client = new WsClient();
+    client = new WsClient({ url: `ws://localhost:${serverPort}` });
     await expect(client.connect()).resolves.not.toThrow();
   });
 
   test('should handle multiple concurrent connections', async () => {
-    const client1 = new WsClient();
-    const client2 = new WsClient();
-    const client3 = new WsClient();
+    const client1 = new WsClient({ url: `ws://localhost:${serverPort}` });
+    const client2 = new WsClient({ url: `ws://localhost:${serverPort}` });
+    const client3 = new WsClient({ url: `ws://localhost:${serverPort}` });
 
     await Promise.all([
       expect(client1.connect()).resolves.not.toThrow(),
@@ -40,7 +41,7 @@ describe('WebSocket Connection Tests', () => {
   });
 
   test('should handle disconnection gracefully', async () => {
-    client = new WsClient();
+    client = new WsClient({ url: `ws://localhost:${serverPort}` });
     await client.connect();
     
     const closePromise = new Promise<void>((resolve) => {
@@ -53,17 +54,17 @@ describe('WebSocket Connection Tests', () => {
 
   test('should handle reconnection correctly', async () => {
     // Connect first time
-    client = new WsClient();
+    client = new WsClient({ url: `ws://localhost:${serverPort}` });
     await client.connect();
     client.close();
 
     // Connect again
-    client = new WsClient();
+    client = new WsClient({ url: `ws://localhost:${serverPort}` });
     await expect(client.connect()).resolves.not.toThrow();
   });
 
   test('should respond to ping messages', async () => {
-    client = new WsClient();
+    client = new WsClient({ url: `ws://localhost:${serverPort}` });
     await client.connect();
 
     const pingResponse = new Promise<any>((resolve) => {

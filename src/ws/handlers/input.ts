@@ -11,7 +11,7 @@ export function handleInput(ws: any, message: InputMessage) {
   
   // 检查状态存储是否可用
   if (!stateStore) {
-    console.error('StateStore not available');
+    console.error('InputHandlerError: StateStore not available');
     return;
   }
   
@@ -21,7 +21,7 @@ export function handleInput(ws: any, message: InputMessage) {
   if (stored) {
     // 处理metadata
     if (message.metadata) {
-      console.log(`Input received from ${message.metadata.clientId} at ${message.metadata.timestamp}`);
+      console.log(`InputEvent: Received from ${message.metadata.clientId} at ${message.metadata.timestamp}`);
     }
     
     // 发送ACK消息
@@ -36,9 +36,9 @@ export function handleInput(ws: any, message: InputMessage) {
     
     try {
       ws.send(JSON.stringify(ackMessage));
-      console.log(`ACK sent for sequence ${message.data?.frameId || Date.now()}`);
+      // 移除重复的ACK发送日志
     } catch (error) {
-      console.error('Error sending ACK:', error);
+      console.error('InputHandlerError: Error sending ACK:', error);
     }
   } else {
     // 发送错误ACK消息
@@ -54,9 +54,9 @@ export function handleInput(ws: any, message: InputMessage) {
     
     try {
       ws.send(JSON.stringify(errorAckMessage));
-      console.error(`Error ACK sent for sequence ${message.data?.frameId || Date.now()}`);
+      console.error(`InputHandlerError: Error ACK sent for sequence ${message.data?.frameId || Date.now()}`);
     } catch (error) {
-      console.error('Error sending error ACK:', error);
+      console.error('InputHandlerError: Error sending error ACK:', error);
     }
   }
 }

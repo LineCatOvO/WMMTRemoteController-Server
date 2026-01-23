@@ -8,17 +8,17 @@ describe('State Update and Coverage Tests', () => {
   let stateStore: StateStore;
   let applyScheduler: ApplyScheduler;
 
-  beforeAll(() => {
-    startWsServer();
+  beforeAll(async () => {
+    await startWsServer();
     startInputExecutor();
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     if (applyScheduler) {
       applyScheduler.stop();
     }
     stopInputExecutor();
-    stopWsServer();
+    await stopWsServer();
   });
 
   beforeEach(() => {
@@ -28,7 +28,9 @@ describe('State Update and Coverage Tests', () => {
   });
 
   afterEach(() => {
-    applyScheduler.stop();
+    if (applyScheduler) {
+      applyScheduler.stop();
+    }
   });
 
   test('should store and retrieve the latest state', () => {

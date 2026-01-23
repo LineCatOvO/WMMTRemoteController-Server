@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/20</span>
+                <span class='fraction'>8/20</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>2/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/20</span>
+                <span class='fraction'>8/20</span>
             </div>
         
             
@@ -115,24 +115,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -143,12 +138,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { config } from '../config/config';
@@ -157,12 +157,12 @@
  * 心跳管理器
  * @param ws WebSocket连接
  */
-export function <span class="fstat-no" title="function not covered" >setupHeartbeat(</span>ws: any) {
+export function setupHeartbeat(ws: any) {
   // 标记连接为活跃状态
-<span class="cstat-no" title="statement not covered" >  ws.isAlive = true;</span>
+  ws.isAlive = true;
   
   // 心跳定时器
-  const heartbeatTimer = <span class="cstat-no" title="statement not covered" >setInterval(<span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+  const heartbeatTimer = setInterval(<span class="fstat-no" title="function not covered" >() =</span>&gt; {
 <span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (ws.readyState !== 1) { // WebSocket.OPEN = 1</span>
 <span class="cstat-no" title="statement not covered" >      clearInterval(heartbeatTimer);</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
@@ -182,17 +182,17 @@ export function <span class="fstat-no" title="function not covered" >setupHeartb
   }, config.pingInterval);
   
   // 处理pong响应
-<span class="cstat-no" title="statement not covered" >  ws.on('pong', <span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+  ws.on('pong', <span class="fstat-no" title="function not covered" >() =</span>&gt; {
 <span class="cstat-no" title="statement not covered" >    ws.isAlive = true;</span>
   });
   
   // 连接关闭时清理定时器
-<span class="cstat-no" title="statement not covered" >  ws.on('close', <span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    clearInterval(heartbeatTimer);</span>
+  ws.on('close', () =&gt; {
+    clearInterval(heartbeatTimer);
   });
   
   // 连接错误时清理定时器
-<span class="cstat-no" title="statement not covered" >  ws.on('error', <span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+  ws.on('error', <span class="fstat-no" title="function not covered" >() =</span>&gt; {
 <span class="cstat-no" title="statement not covered" >    clearInterval(heartbeatTimer);</span>
   });
 }</pre></td></tr></table></pre>
@@ -202,7 +202,7 @@ export function <span class="fstat-no" title="function not covered" >setupHeartb
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T08:24:22.960Z
+                at 2026-01-23T09:35:11.408Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -116,7 +116,7 @@ export class ApplyScheduler {
         }
       } else {
         // 没有最新状态，不执行任何操作
-        console.debug('ApplyScheduler: No latest state available');
+        // 移除重复日志，只记录关键事件
       }
     } catch (error) {
       console.error('ApplyScheduler: Error applying state:', error);

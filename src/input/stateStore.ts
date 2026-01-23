@@ -48,14 +48,14 @@ export class StateStore {
   storeState(state: InputState): boolean {
     // 验证状态完整性
     if (!this.isValidState(state)) {
-      console.error('StateStore: Invalid state received');
+      console.error('StateStoreError: Invalid state received');
       return false;
     }
     
     // 验证序列号单调性
     const sequenceNumber = this.extractSequenceNumber(state);
     if (!this.isValidSequenceNumber(sequenceNumber)) {
-      console.error(`StateStore: Invalid sequence number ${sequenceNumber}, last applied: ${this.lastAppliedSequenceNumber}`);
+      console.error(`StateStoreError: Invalid sequence number ${sequenceNumber}, last applied: ${this.lastAppliedSequenceNumber}`);
       return false;
     }
     
@@ -76,7 +76,7 @@ export class StateStore {
       this.stateHistory.shift();
     }
     
-    console.log(`StateStore: State stored, sequence: ${sequenceNumber}, received time: ${receivedTime}`);
+    // 只记录关键状态信息，不重复打印完整状态
     return true;
   }
   
@@ -100,7 +100,7 @@ export class StateStore {
     const historyEntry = this.stateHistory.find(entry => entry.sequenceNumber === sequenceNumber);
     if (historyEntry) {
       historyEntry.appliedTime = Date.now();
-      console.log(`StateStore: State applied, sequence: ${sequenceNumber}, applied time: ${historyEntry.appliedTime}`);
+      // 移除重复的应用状态日志
     }
   }
   

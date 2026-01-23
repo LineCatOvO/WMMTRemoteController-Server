@@ -47,7 +47,7 @@ export class JoystickExecutor implements InputExecutor {
    */
   applyDelta(delta: InputDelta): void {
     if (delta.joystick) {
-      console.log('JoystickExecutor: Applying delta', delta.joystick);
+      console.log('JoystickEvent: Applying delta', delta.joystick);
       // 增量处理（待实现）
     }
   }
@@ -58,7 +58,7 @@ export class JoystickExecutor implements InputExecutor {
    */
   applyEvent(event: InputEvent): void {
     if (event.type === 'joystick_move') {
-      console.log('JoystickExecutor: Applying event', event.type, event.data);
+      console.log('JoystickEvent: Applying event', event.type, event.data);
       // 事件处理（待实现）
     }
   }
@@ -67,28 +67,45 @@ export class JoystickExecutor implements InputExecutor {
    * 重置输入状态
    */
   reset(): void {
-    // 所有轴归零
-    this.currentJoystickState.axes = {
-      lx: 0, ly: 0, rx: 0, ry: 0
-    };
-    
-    // 所有按钮释放
-    this.currentJoystickState.buttons = {
-      a: false, b: false, x: false, y: false,
-      lb: false, rb: false, back: false, start: false,
-      ls: false, rs: false,
-      up: false, down: false, left: false, right: false
-    };
-    
-    // 所有扳机归零
-    this.currentJoystickState.triggers = {
-      lt: 0, rt: 0
-    };
-    
-    // 提交归零状态
-    this.submitFullState();
-    
-    console.log('JoystickExecutor: Resetting to zero state');
+    // 只在当前状态非默认时记录重置事件
+    if (!this.isDefaultState()) {
+      // 所有轴归零
+      this.currentJoystickState.axes = {
+        lx: 0, ly: 0, rx: 0, ry: 0
+      };
+      
+      // 所有按钮释放
+      this.currentJoystickState.buttons = {
+        a: false, b: false, x: false, y: false,
+        lb: false, rb: false, back: false, start: false,
+        ls: false, rs: false,
+        up: false, down: false, left: false, right: false
+      };
+      
+      // 所有扳机归零
+      this.currentJoystickState.triggers = {
+        lt: 0, rt: 0
+      };
+      
+      // 提交归零状态
+      this.submitFullState();
+      
+      console.log('JoystickEvent: Resetting to zero state');
+    }
+  }
+  
+  /**
+   * 检查当前状态是否为默认状态
+   * @returns 是否为默认状态
+   */
+  private isDefaultState(): boolean {
+    return this.currentJoystickState.axes.lx === 0 &&
+           this.currentJoystickState.axes.ly === 0 &&
+           this.currentJoystickState.axes.rx === 0 &&
+           this.currentJoystickState.axes.ry === 0 &&
+           Object.values(this.currentJoystickState.buttons).every(button => button === false) &&
+           this.currentJoystickState.triggers.lt === 0 &&
+           this.currentJoystickState.triggers.rt === 0;
   }
   
   /**
@@ -96,12 +113,30 @@ export class JoystickExecutor implements InputExecutor {
    * @param joystickState 摇杆状态
    */
   private updateAxes(joystickState: any): void {
+    // 记录轴值变化
+    const axisChanges: any = {};
+    
     // 处理摇杆轴状态
     if (joystickState.x !== undefined) {
-      this.currentJoystickState.axes.lx = this.clampAxisValue(joystickState.x);
+      const oldValue = this.currentJoystickState.axes.lx;
+      const newValue = this.clampAxisValue(joystickState.x);
+      if (oldValue !== newValue) {
+        this.currentJoystickState.axes.lx = newValue;
+        axisChanges.lx = { old: oldValue, new: newValue };
+      }
     }
     if (joystickState.y !== undefined) {
-      this.currentJoystickState.axes.ly = this.clampAxisValue(joystickState.y);
+      const oldValue = this.currentJoystickState.axes.ly;
+      const newValue = this.clampAxisValue(joystickState.y);
+      if (oldValue !== newValue) {
+        this.currentJoystickState.axes.ly = newValue;
+        axisChanges.ly = { old: oldValue, new: newValue };
+      }
+    }
+    
+    // 只在有轴值变化时记录日志
+    if (Object.keys(axisChanges).length > 0) {
+      console.log('JoystickEvent: Axis values changed', axisChanges);
     }
     
     // 这里可以添加更多轴的处理
@@ -130,9 +165,6 @@ export class JoystickExecutor implements InputExecutor {
    */
   private submitFullState(): void {
     try {
-      // 模拟提交状态到虚拟设备
-      console.log('JoystickExecutor: Submitting full state', this.currentJoystickState);
-      
       // 这里将在有vigemclient环境时替换为真实的vigemclient调用
       // 例如：
       // vigemclient.setAxis(0, this.currentJoystickState.axes.lx);
@@ -141,7 +173,7 @@ export class JoystickExecutor implements InputExecutor {
       
       this.isDeviceConnected = true;
     } catch (error) {
-      console.error('JoystickExecutor: Error submitting state', error);
+      console.error('JoystickError: Error submitting state', error);
       this.isDeviceConnected = false;
     }
   }

@@ -25,21 +25,42 @@ const handlers: Record<string, (ws: any, message: any) => void> = {
  * @param message 消息对象
  */
 export function handleMessage(ws: any, message: WsMessage) {
-  const handler = handlers[message.type];
-  
-  if (handler) {
-    try {
-      handler(ws, message);
-    } catch (error) {
-      console.error(`Error handling message type ${message.type}:`, error);
+  try {
+    if (message === null || message === undefined) {
+      console.error('Error handling message: Message is null or undefined');
+      return;
     }
-  } else {
-    console.log('Unknown message type:', message.type);
-    // 发送错误消息
+    
+    const handler = handlers[message.type];
+    
+    if (handler) {
+      try {
+        handler(ws, message);
+      } catch (error) {
+        console.error(`Error handling message type ${message.type}:`, error);
+        // 发送错误消息给客户端
+        ws.send(JSON.stringify({
+          type: 'error',
+          code: 'INTERNAL_ERROR',
+          message: 'Error processing message'
+        }));
+      }
+    } else {
+      console.log('Unknown message type:', message.type);
+      // 发送错误消息
+      ws.send(JSON.stringify({
+        type: 'error',
+        code: 'UNSUPPORTED_MESSAGE_TYPE',
+        message: `Unsupported message type: ${message.type}`
+      }));
+    }
+  } catch (error) {
+    console.error(`Error in handleMessage:`, error, 'Original message:', message);
+    // 发送通用错误消息给客户端
     ws.send(JSON.stringify({
       type: 'error',
-      code: 'UNSUPPORTED_MESSAGE_TYPE',
-      message: `Unsupported message type: ${message.type}`
+      code: 'INVALID_MESSAGE',
+      message: 'Invalid message format'
     }));
   }
 }

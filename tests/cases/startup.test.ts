@@ -7,17 +7,17 @@ describe('Startup Phase Tests', () => {
   let stateStore: StateStore;
   let applyScheduler: ApplyScheduler;
 
-  afterEach(() => {
+  afterEach(async () => {
     if (applyScheduler) {
       applyScheduler.stop();
     }
     stopInputExecutor();
-    stopWsServer();
+    await stopWsServer();
   });
 
-  test('should initialize all components correctly', () => {
+  test('should initialize all components correctly', async () => {
     // Start WebSocket server
-    startWsServer();
+    await startWsServer();
 
     // Start input executor
     startInputExecutor();
@@ -37,9 +37,9 @@ describe('Startup Phase Tests', () => {
     expect(applyScheduler.isRunning()).toBe(true);
   });
 
-  test('should handle component shutdown correctly', () => {
+  test('should handle component shutdown correctly', async () => {
     // Start all components
-    startWsServer();
+    await startWsServer();
     startInputExecutor();
     stateStore = new StateStore();
     const executorManager = getExecutorManager();
@@ -52,7 +52,7 @@ describe('Startup Phase Tests', () => {
     // Stop components
     applyScheduler.stop();
     stopInputExecutor();
-    stopWsServer();
+    await stopWsServer();
 
     // Verify scheduler is stopped
     expect(applyScheduler.isRunning()).toBe(false);

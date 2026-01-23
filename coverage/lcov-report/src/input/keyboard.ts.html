@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.77% </span>
+                <span class="strong">56.41% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/36</span>
+                <span class='fraction'>22/39</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.46% </span>
+                <span class="strong">55.55% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/13</span>
+                <span class='fraction'>10/18</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.12% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/32</span>
+                <span class='fraction'>20/35</span>
             </div>
         
             
@@ -177,7 +177,17 @@
 <a name='L112'></a><a href='#L112'>112</a>
 <a name='L113'></a><a href='#L113'>113</a>
 <a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -265,6 +275,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -273,14 +285,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,7 +308,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InputExecutor } from './interfaces';
 import { InputState, InputDelta, InputEvent } from '../types/ws';
@@ -376,34 +396,44 @@ export class KeyboardExecutor implements InputExecutor {
     // 找出移除的按键（需要释放）
     const keysToRelease = new Set([...this.currentKeyboardState].filter(key =&gt; !newState.has(key)));
     
-    // 先释放需要释放的键
-    if (keysToRelease.size &gt; 0) {
-      // 注意：对于需要持续按住的按键，我们需要使用不同的方法
-      // 当前使用的node-key-sender库不支持持续按键，这里我们先清空所有按键，然后重新按下需要的键
-      console.log('Releasing keys:', Array.from(keysToRelease));
-      
-      // 清空所有按键（通过重置当前状态）
-      this.currentKeyboardState.clear();
-    }
-    
-    // 然后按下需要按下的键
-    if (keysToPress.size &gt; 0 || this.currentKeyboardState.size === 0) {
-      // 如果需要按下新键，或者当前状态为空（刚刚清空），则重新按下所有需要的键
-      const keysToPressAll = Array.from(newState);
-      console.log('Pressing keys:', keysToPressAll);
-      try {
-        // 对于持续按键，我们需要使用不同的库或方法
-        // 这里使用node-key-sender的sendKey方法，它会自动释放，但对于某些游戏可能有效
-        if (keysToPressAll.length &gt; 0) {
-          keySender.sendKey(keysToPressAll);
-        }
-      } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error('Error pressing keys:', error);</span>
+    // 只在状态有变化时记录日志
+    if (keysToPress.size &gt; 0 || keysToRelease.size &gt; 0) {
+      // 先释放需要释放的键
+      if (keysToRelease.size &gt; 0) {
+        // 注意：对于需要持续按住的按键，我们需要使用不同的方法
+        // 当前使用的node-key-sender库不支持持续按键，这里我们先清空所有按键，然后重新按下需要的键
+        console.log('KeyboardEvent: Releasing keys:', Array.from(keysToRelease));
+        
+        // 清空所有按键（通过重置当前状态）
+        this.currentKeyboardState.clear();
       }
+      
+      // 然后按下需要按下的键
+      if (keysToPress.size &gt; 0 || this.currentKeyboardState.size === 0) {
+        // 如果需要按下新键，或者当前状态为空（刚刚清空），则重新按下所有需要的键
+        const keysToPressAll = Array.from(newState);
+        
+        // 只记录非空状态变化
+        if (keysToPressAll.length &gt; 0) {
+          console.log('KeyboardEvent: Pressing keys:', keysToPressAll);
+        } else {
+          console.log('KeyboardEvent: Releasing all keys');
+        }
+        
+        try {
+          // 对于持续按键，我们需要使用不同的库或方法
+          // 这里使用node-key-sender的sendKey方法，它会自动释放，但对于某些游戏可能有效
+          if (keysToPressAll.length &gt; 0) {
+            keySender.sendKey(keysToPressAll);
+          }
+        } catch (error) {
+<span class="cstat-no" title="statement not covered" >          console.error('KeyboardError: Error pressing keys:', error);</span>
+        }
+      }
+      
+      // 更新当前键盘状态
+      this.currentKeyboardState = newState;
     }
-    
-    // 更新当前键盘状态
-    this.currentKeyboardState = newState;
   }
 }</pre></td></tr></table></pre>
 
@@ -412,7 +442,7 @@ export class KeyboardExecutor implements InputExecutor {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T08:24:22.960Z
+                at 2026-01-23T09:35:11.408Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

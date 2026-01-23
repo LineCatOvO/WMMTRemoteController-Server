@@ -55,7 +55,7 @@ export class SafetyController {
    */
   recordValidState(state: InputState): void {
     this.lastValidStateTime = Date.now();
-    console.log('SafetyController: Valid state received, resetting timeout');
+    // 移除重复日志，只记录关键事件
   }
   
   /**

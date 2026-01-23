@@ -83,33 +83,43 @@ export class KeyboardExecutor implements InputExecutor {
     // 找出移除的按键（需要释放）
     const keysToRelease = new Set([...this.currentKeyboardState].filter(key => !newState.has(key)));
     
-    // 先释放需要释放的键
-    if (keysToRelease.size > 0) {
-      // 注意：对于需要持续按住的按键，我们需要使用不同的方法
-      // 当前使用的node-key-sender库不支持持续按键，这里我们先清空所有按键，然后重新按下需要的键
-      console.log('Releasing keys:', Array.from(keysToRelease));
-      
-      // 清空所有按键（通过重置当前状态）
-      this.currentKeyboardState.clear();
-    }
-    
-    // 然后按下需要按下的键
-    if (keysToPress.size > 0 || this.currentKeyboardState.size === 0) {
-      // 如果需要按下新键，或者当前状态为空（刚刚清空），则重新按下所有需要的键
-      const keysToPressAll = Array.from(newState);
-      console.log('Pressing keys:', keysToPressAll);
-      try {
-        // 对于持续按键，我们需要使用不同的库或方法
-        // 这里使用node-key-sender的sendKey方法，它会自动释放，但对于某些游戏可能有效
-        if (keysToPressAll.length > 0) {
-          keySender.sendKey(keysToPressAll);
-        }
-      } catch (error) {
-        console.error('Error pressing keys:', error);
+    // 只在状态有变化时记录日志
+    if (keysToPress.size > 0 || keysToRelease.size > 0) {
+      // 先释放需要释放的键
+      if (keysToRelease.size > 0) {
+        // 注意：对于需要持续按住的按键，我们需要使用不同的方法
+        // 当前使用的node-key-sender库不支持持续按键，这里我们先清空所有按键，然后重新按下需要的键
+        console.log('KeyboardEvent: Releasing keys:', Array.from(keysToRelease));
+        
+        // 清空所有按键（通过重置当前状态）
+        this.currentKeyboardState.clear();
       }
+      
+      // 然后按下需要按下的键
+      if (keysToPress.size > 0 || this.currentKeyboardState.size === 0) {
+        // 如果需要按下新键，或者当前状态为空（刚刚清空），则重新按下所有需要的键
+        const keysToPressAll = Array.from(newState);
+        
+        // 只记录非空状态变化
+        if (keysToPressAll.length > 0) {
+          console.log('KeyboardEvent: Pressing keys:', keysToPressAll);
+        } else {
+          console.log('KeyboardEvent: Releasing all keys');
+        }
+        
+        try {
+          // 对于持续按键，我们需要使用不同的库或方法
+          // 这里使用node-key-sender的sendKey方法，它会自动释放，但对于某些游戏可能有效
+          if (keysToPressAll.length > 0) {
+            keySender.sendKey(keysToPressAll);
+          }
+        } catch (error) {
+          console.error('KeyboardError: Error pressing keys:', error);
+        }
+      }
+      
+      // 更新当前键盘状态
+      this.currentKeyboardState = newState;
     }
-    
-    // 更新当前键盘状态
-    this.currentKeyboardState = newState;
   }
 }

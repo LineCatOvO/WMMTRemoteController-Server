@@ -3,35 +3,96 @@ const WebSocket = require('ws');
 import { handleConnection } from './connection';
 
 let wss: any = null;
+let actualPort: number = 0;
 
 /**
  * 创建并启动WebSocket服务器
+ * @returns Promise<number> 解析为实际使用的端口，表示服务器成功启动，拒绝表示服务器启动失败
  */
-export function startWsServer() {
-  wss = new WebSocket.WebSocketServer({ port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000 });
-  
-  wss.on('connection', (ws: any) => {
-    console.log('Client connected');
-    handleConnection(ws);
+export function startWsServer(): Promise<number> {
+  return new Promise((resolve, reject) => {
+    try {
+      // 初始端口
+      let port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+      
+      // 尝试启动服务器，如果端口被占用则自动重试
+      const tryStartServer = (currentPort: number) => {
+        wss = new WebSocket.WebSocketServer({ port: currentPort });
+        
+        wss.on('listening', () => {
+          actualPort = currentPort;
+          console.log(`WMMT Controller Server is running on ws://localhost:${currentPort}`);
+          resolve(currentPort);
+        });
+        
+        wss.on('error', (error: any) => {
+          // 如果是端口被占用错误，尝试下一个端口
+          if (error.code === 'EADDRINUSE') {
+            console.debug(`Port ${currentPort} is already in use, trying port ${currentPort + 1}`);
+            wss.close();
+            // 尝试下一个端口，但最多尝试5次
+            if (currentPort - port < 5) {
+              tryStartServer(currentPort + 1);
+            } else {
+              console.error('WebSocket server error: Failed to find available port after 5 attempts');
+              reject(error);
+            }
+          } else {
+            console.error('WebSocket server error:', error);
+            reject(error);
+          }
+        });
+        
+        wss.on('connection', (ws: any) => {
+          console.log('Client connected');
+          handleConnection(ws);
+        });
+        
+        wss.on('close', () => {
+          // 避免在测试环境销毁后执行日志
+          if (typeof console !== 'undefined') {
+            console.log('WebSocket server closed');
+          }
+        });
+      };
+      
+      tryStartServer(port);
+    } catch (error) {
+      console.error('Error creating WebSocket server:', error);
+      reject(error);
+    }
   });
-  
-  wss.on('error', (error: any) => {
-    console.error('WebSocket server error:', error);
-  });
-  
-  wss.on('close', () => {
-    console.log('WebSocket server closed');
-  });
-  
-  console.log(`WMMT Controller Server is running on ws://localhost:${process.env.PORT || 3000}`);
+}
+
+/**
+ * 获取实际使用的端口
+ * @returns number 实际使用的端口号，如果服务器未启动则返回0
+ */
+export function getActualPort(): number {
+  return actualPort;
 }
 
 /**
  * 关闭WebSocket服务器
+ * @returns Promise<void> 解析表示服务器成功关闭
  */
-export function stopWsServer() {
-  if (wss) {
-    wss.close();
-    wss = null;
-  }
+export function stopWsServer(): Promise<void> {
+  return new Promise((resolve) => {
+    if (wss) {
+      // 添加关闭事件监听器，确保服务器完全关闭后再resolve
+      wss.once('close', () => {
+        // 避免在测试环境销毁后执行日志
+        if (typeof console !== 'undefined') {
+          console.log('WebSocket server closed');
+        }
+        wss = null;
+        actualPort = 0;
+        resolve();
+      });
+      wss.close();
+    } else {
+      // 如果服务器已经关闭，直接resolve
+      resolve();
+    }
+  });
 }
