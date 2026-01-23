@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.76% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/17</span>
+                <span class='fraction'>3/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.33% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/15</span>
+                <span class='fraction'>3/15</span>
             </div>
         
             
@@ -99,7 +99,11 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -112,6 +116,19 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -119,24 +136,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InputDeltaMessage } from '../../types/ws';
-import { inputState } from '../../input/state';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InputDeltaMessage } from "../../types/ws";
+import { inputState } from "../../input/state";
+import { formatInputDeltaMessageLog } from "../../utils/logInputData";
 &nbsp;
 /**
  * 处理输入增量消息
@@ -144,41 +151,43 @@ import { inputState } from '../../input/state';
  * @param message 输入增量消息
  */
 export function <span class="fstat-no" title="function not covered" >handleInputDelta(</span>ws: any, message: InputDeltaMessage) {
-  // 更新输入状态
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.keyboard) {</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.keyboard.pressed) {</span>
-<span class="cstat-no" title="statement not covered" >      message.data.keyboard.pressed.forEach(<span class="fstat-no" title="function not covered" >key </span>=&gt; <span class="cstat-no" title="statement not covered" >inputState.keyboard.add(key))</span>;</span>
+    // 更新输入状态
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.keyboard) {</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.keyboard.pressed) {</span>
+<span class="cstat-no" title="statement not covered" >            message.data.keyboard.pressed.forEach(<span class="fstat-no" title="function not covered" >(k</span>ey) =&gt;</span>
+<span class="cstat-no" title="statement not covered" >                inputState.keyboard.add(key)</span>
+            );
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.keyboard.released) {</span>
+<span class="cstat-no" title="statement not covered" >            message.data.keyboard.released.forEach(<span class="fstat-no" title="function not covered" >(k</span>ey) =&gt;</span>
+<span class="cstat-no" title="statement not covered" >                inputState.keyboard.delete(key)</span>
+            );
+        }
     }
-    
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.keyboard.released) {</span>
-<span class="cstat-no" title="statement not covered" >      message.data.keyboard.released.forEach(<span class="fstat-no" title="function not covered" >key </span>=&gt; <span class="cstat-no" title="statement not covered" >inputState.keyboard.delete(key))</span>;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.mouse) {</span>
+<span class="cstat-no" title="statement not covered" >        inputState.mouse = { ...inputState.mouse, ...message.data.mouse };</span>
     }
-  }
-  
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.mouse) {</span>
-<span class="cstat-no" title="statement not covered" >    inputState.mouse = { ...inputState.mouse, ...message.data.mouse };</span>
-  }
-  
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.joystick) {</span>
-<span class="cstat-no" title="statement not covered" >    inputState.joystick = { ...inputState.joystick, ...message.data.joystick };</span>
-  }
-  
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.gyroscope) {</span>
-<span class="cstat-no" title="statement not covered" >    inputState.gyroscope = { ...inputState.gyroscope, ...message.data.gyroscope };</span>
-  }
-  
-  // 处理metadata（目前仅记录日志）
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (message.metadata) {</span>
-<span class="cstat-no" title="statement not covered" >    console.log(`Input delta received from ${message.metadata.clientId} at ${message.metadata.timestamp}`);</span>
-  }
-}</pre></td></tr></table></pre>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.joystick) {</span>
+<span class="cstat-no" title="statement not covered" >        inputState.joystick = {</span>
+            ...inputState.joystick,
+            ...message.data.joystick,
+        };
+    }
+&nbsp;
+    // 记录详细的输入增量数据日志
+<span class="cstat-no" title="statement not covered" >    console.log(formatInputDeltaMessageLog(message));</span>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T10:09:28.143Z
+                at 2026-01-23T16:14:19.606Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

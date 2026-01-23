@@ -57,13 +57,7 @@
       "deadzone": 0.1,
       "smoothing": 0.5
     },
-    "gyroscope": {
-      "pitch": 10.5,
-      "roll": -5.2,
-      "yaw": 3.7,
-      "deadzone": 1.0,
-      "smoothing": 0.3
-    }
+
   },
   "metadata": {
     "clientId": "android-12345",
@@ -293,13 +287,7 @@
     "deadzone": 0.1,
     "smoothing": 0.5
   },
-  "gyroscope": {
-    "pitch": 10.5,
-    "roll": -5.2,
-    "yaw": 3.7,
-    "deadzone": 1.0,
-    "smoothing": 0.3
-  }
+
 }
 ```
 

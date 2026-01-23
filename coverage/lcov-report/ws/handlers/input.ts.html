@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.55% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/18</span>
+                <span class='fraction'>2/20</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.55% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/18</span>
+                <span class='fraction'>2/20</span>
             </div>
         
             
@@ -124,7 +124,15 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,22 +156,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,15 +169,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InputMessage } from '../../types/ws';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InputMessage } from "../../types/ws";
+import { formatInputMessageLog } from "../../utils/logInputData";
 &nbsp;
 /**
  * 处理输入消息
@@ -193,67 +208,73 @@
  * @param message 输入消息
  */
 export function <span class="fstat-no" title="function not covered" >handleInput(</span>ws: any, message: InputMessage) {
-  // 获取全局状态存储实例
-  const stateStore = (<span class="cstat-no" title="statement not covered" >global as any).stateStore;</span>
-  
-  // 检查状态存储是否可用
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (!stateStore) {</span>
-<span class="cstat-no" title="statement not covered" >    console.error('InputHandlerError: StateStore not available');</span>
-<span class="cstat-no" title="statement not covered" >    return;</span>
-  }
-  
-  // 存储状态
-  const stored = <span class="cstat-no" title="statement not covered" >stateStore.storeState(message.data);</span>
-  
-<span class="cstat-no" title="statement not covered" >  if (stored) {</span>
-    // 处理metadata
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.metadata) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`InputEvent: Received from ${message.metadata.clientId} at ${message.metadata.timestamp}`);</span>
+    // 获取全局状态存储实例
+    const stateStore = (<span class="cstat-no" title="statement not covered" >global as any).stateStore;</span>
+&nbsp;
+    // 检查状态存储是否可用
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!stateStore) {</span>
+<span class="cstat-no" title="statement not covered" >        console.error("InputHandlerError: StateStore not available");</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
     }
-    
-    // 发送ACK消息
-    const ackMessage = <span class="cstat-no" title="statement not covered" >{</span>
-      type: 'ack',
-      data: {
-        sequenceNumber: message.data?.frameId || Date.now(),
-        timestamp: Date.now(),
-        status: 'success'
-      }
-    };
-    
-<span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      ws.send(JSON.stringify(ackMessage));</span>
-      // 移除重复的ACK发送日志
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error('InputHandlerError: Error sending ACK:', error);</span>
+&nbsp;
+    // 存储状态
+    const stored = <span class="cstat-no" title="statement not covered" >stateStore.storeState(message.data);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (stored) {</span>
+        // 记录详细的输入数据日志（仅当日志不是空状态时）
+        const logMessage = <span class="cstat-no" title="statement not covered" >formatInputMessageLog(message);</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (logMessage) {</span>
+<span class="cstat-no" title="statement not covered" >            console.log(logMessage);</span>
+        }
+&nbsp;
+        // 发送ACK消息
+        const ackMessage = <span class="cstat-no" title="statement not covered" >{</span>
+            type: "ack",
+            data: {
+                sequenceNumber: message.data?.frameId || Date.now(),
+                timestamp: Date.now(),
+                status: "success",
+            },
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            ws.send(JSON.stringify(ackMessage));</span>
+            // 移除重复的ACK发送日志
+        } catch (error) {
+<span class="cstat-no" title="statement not covered" >            console.error("InputHandlerError: Error sending ACK:", error);</span>
+        }
+    } else {
+        // 发送错误ACK消息
+        const errorAckMessage = <span class="cstat-no" title="statement not covered" >{</span>
+            type: "ack",
+            data: {
+                sequenceNumber: message.data?.frameId || Date.now(),
+                timestamp: Date.now(),
+                status: "error",
+                reason: "Invalid state",
+            },
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            ws.send(JSON.stringify(errorAckMessage));</span>
+<span class="cstat-no" title="statement not covered" >            console.error(</span>
+                `InputHandlerError: Error ACK sent for sequence ${
+                    message.data?.frameId || Date.now()
+                }`
+            );
+        } catch (error) {
+<span class="cstat-no" title="statement not covered" >            console.error("InputHandlerError: Error sending error ACK:", error);</span>
+        }
     }
-  } else {
-    // 发送错误ACK消息
-    const errorAckMessage = <span class="cstat-no" title="statement not covered" >{</span>
-      type: 'ack',
-      data: {
-        sequenceNumber: message.data?.frameId || Date.now(),
-        timestamp: Date.now(),
-        status: 'error',
-        reason: 'Invalid state'
-      }
-    };
-    
-<span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      ws.send(JSON.stringify(errorAckMessage));</span>
-<span class="cstat-no" title="statement not covered" >      console.error(`InputHandlerError: Error ACK sent for sequence ${message.data?.frameId || Date.now()}`);</span>
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error('InputHandlerError: Error sending error ACK:', error);</span>
-    }
-  }
-}</pre></td></tr></table></pre>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T09:57:36.579Z
+                at 2026-01-23T15:56:22.774Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

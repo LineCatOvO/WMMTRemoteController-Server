@@ -1,5 +1,6 @@
 import { InputEventMessage } from '../../types/ws';
 import { getExecutorManager } from '../../input/executor';
+import { formatInputEventMessageLog } from '../../utils/logInputData';
 
 /**
  * 处理输入事件消息
@@ -13,6 +14,6 @@ export function handleInputEvent(ws: any, message: InputEventMessage) {
   // 应用输入事件到所有执行器
   executorManager.applyEvent(message.data);
   
-  // 处理metadata（目前仅记录日志）
-  console.log(`Input event received: ${message.data.type}`);
+  // 记录详细的输入事件数据日志
+  console.log(formatInputEventMessageLog(message));
 }

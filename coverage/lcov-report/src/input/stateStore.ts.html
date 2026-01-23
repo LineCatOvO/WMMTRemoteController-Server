@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>10/15</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">69.76% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>30/42</span>
+                <span class='fraction'>30/43</span>
             </div>
         
             
@@ -264,7 +264,12 @@
 <a name='L199'></a><a href='#L199'>199</a>
 <a name='L200'></a><a href='#L200'>200</a>
 <a name='L201'></a><a href='#L201'>201</a>
-<a name='L202'></a><a href='#L202'>202</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -322,6 +327,8 @@
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -351,7 +358,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,6 +371,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -378,7 +387,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
@@ -423,6 +431,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -465,13 +475,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InputState } from '../types/ws';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InputState } from "../types/ws";
 &nbsp;
 /**
  * 状态存储配置
  */
 interface StateStoreConfig {
-  maxHistorySize: number; // 最大历史状态记录数
+    maxHistorySize: number; // 最大历史状态记录数
 }
 &nbsp;
 /**
@@ -479,192 +489,197 @@ interface StateStoreConfig {
  * 负责管理ControlResultState的存储、时间语义和序列号校验
  */
 export class StateStore {
-  // 最新状态
-  private latestState: InputState | null = null;
-  
-  // 状态历史记录
-  private stateHistory: Array&lt;{
-    state: InputState;
-    receivedTime: number;
-    appliedTime: number | null;
-    sequenceNumber: number;
-  }&gt; = [];
-  
-  // 最后应用的序列号
-  private lastAppliedSequenceNumber: number = 0;
-  
-  // 配置
-  private readonly config: StateStoreConfig;
-  
-  /**
-   * 构造函数
-   * @param config 状态存储配置
-   */
-  constructor(config?: Partial&lt;StateStoreConfig&gt;) {
-    this.config = {
-      maxHistorySize: 100, // 默认保留100条历史记录
-      ...config
-    };
-  }
-  
-  /**
-   * 存储新状态
-   * @param state 新状态
-   * @returns 是否成功存储
-   */
-  storeState(state: InputState): boolean {
-    // 验证状态完整性
-    if (!this.isValidState(state)) {
-      console.error('StateStoreError: Invalid state received');
-      return false;
+    // 最新状态
+    private latestState: InputState | null = null;
+&nbsp;
+    // 状态历史记录
+    private stateHistory: Array&lt;{
+        state: InputState;
+        receivedTime: number;
+        appliedTime: number | null;
+        sequenceNumber: number;
+    }&gt; = [];
+&nbsp;
+    // 最后应用的序列号
+    private lastAppliedSequenceNumber: number = 0;
+&nbsp;
+    // 配置
+    private readonly config: StateStoreConfig;
+&nbsp;
+    /**
+     * 构造函数
+     * @param config 状态存储配置
+     */
+    constructor(config?: Partial&lt;StateStoreConfig&gt;) {
+        this.config = {
+            maxHistorySize: 100, // 默认保留100条历史记录
+            ...config,
+        };
     }
-    
-    // 验证序列号单调性
-    const sequenceNumber = this.extractSequenceNumber(state);
-    if (!this.isValidSequenceNumber(sequenceNumber)) {
-      console.error(`StateStoreError: Invalid sequence number ${sequenceNumber}, last applied: ${this.lastAppliedSequenceNumber}`);
-      return false;
+&nbsp;
+    /**
+     * 存储新状态
+     * @param state 新状态
+     * @returns 是否成功存储
+     */
+    storeState(state: InputState): boolean {
+        // 验证状态完整性
+        if (!this.isValidState(state)) {
+            console.error("StateStoreError: Invalid state received");
+            return false;
+        }
+&nbsp;
+        // 验证序列号单调性
+        const sequenceNumber = this.extractSequenceNumber(state);
+        if (!this.isValidSequenceNumber(sequenceNumber)) {
+            console.error(
+                `StateStoreError: Invalid sequence number ${sequenceNumber}, last applied: ${this.lastAppliedSequenceNumber}`
+            );
+            return false;
+        }
+&nbsp;
+        // 存储状态
+        const receivedTime = Date.now();
+        this.latestState = state;
+&nbsp;
+        // 添加到历史记录
+        this.stateHistory.push({
+            state,
+            receivedTime,
+            appliedTime: null,
+            sequenceNumber,
+        });
+&nbsp;
+        // 限制历史记录大小
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (this.stateHistory.length &gt; this.config.maxHistorySize) {
+<span class="cstat-no" title="statement not covered" >            this.stateHistory.shift();</span>
+        }
+&nbsp;
+        // 只记录关键状态信息，不重复打印完整状态
+        return true;
     }
-    
-    // 存储状态
-    const receivedTime = Date.now();
-    this.latestState = state;
-    
-    // 添加到历史记录
-    this.stateHistory.push({
-      state,
-      receivedTime,
-      appliedTime: null,
-      sequenceNumber
-    });
-    
-    // 限制历史记录大小
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.stateHistory.length &gt; this.config.maxHistorySize) {
-<span class="cstat-no" title="statement not covered" >      this.stateHistory.shift();</span>
+&nbsp;
+    /**
+     * 获取最新状态
+     * @returns 最新状态
+     */
+    getLatestState(): InputState | null {
+        return this.latestState;
     }
-    
-    // 只记录关键状态信息，不重复打印完整状态
-    return true;
-  }
-  
-  /**
-   * 获取最新状态
-   * @returns 最新状态
-   */
-  getLatestState(): InputState | null {
-    return this.latestState;
-  }
-  
-  /**
-   * 记录状态应用时间
-   * @param sequenceNumber 序列号
-   */
-<span class="fstat-no" title="function not covered" >  recordAppliedState(</span>sequenceNumber: number): void {
-    // 更新最后应用的序列号
-<span class="cstat-no" title="statement not covered" >    this.lastAppliedSequenceNumber = sequenceNumber;</span>
-    
-    // 更新历史记录中的应用时间
-    const historyEntry = <span class="cstat-no" title="statement not covered" >this.stateHistory.find(<span class="fstat-no" title="function not covered" >entry </span>=&gt; <span class="cstat-no" title="statement not covered" >entry.sequenceNumber === sequenceNumber)</span>;</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (historyEntry) {</span>
-<span class="cstat-no" title="statement not covered" >      historyEntry.appliedTime = Date.now();</span>
-      // 移除重复的应用状态日志
+&nbsp;
+    /**
+     * 记录状态应用时间
+     * @param sequenceNumber 序列号
+     */
+<span class="fstat-no" title="function not covered" >    recordAppliedState(</span>sequenceNumber: number): void {
+        // 更新最后应用的序列号
+<span class="cstat-no" title="statement not covered" >        this.lastAppliedSequenceNumber = sequenceNumber;</span>
+&nbsp;
+        // 更新历史记录中的应用时间
+        const historyEntry = <span class="cstat-no" title="statement not covered" >this.stateHistory.find(</span>
+<span class="fstat-no" title="function not covered" >            (e</span>ntry) =&gt; <span class="cstat-no" title="statement not covered" >entry.sequenceNumber === sequenceNumber</span>
+        );
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (historyEntry) {</span>
+<span class="cstat-no" title="statement not covered" >            historyEntry.appliedTime = Date.now();</span>
+            // 移除重复的应用状态日志
+        }
     }
-  }
-  
-  /**
-   * 验证状态完整性
-   * @param state 要验证的状态
-   * @returns 是否有效
-   */
-  private isValidState(state: InputState): boolean {
-    // 基本验证：状态对象必须存在
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!state) <span class="cstat-no" title="statement not covered" >return false;</span>
-    
-    // 验证必要字段
-    // InputState requires keyboard, mouse, joystick, and gyroscope fields
-    if (!state.keyboard || !state.mouse || !state.joystick || !state.gyroscope) {
-      return false;
+&nbsp;
+    /**
+     * 验证状态完整性
+     * @param state 要验证的状态
+     * @returns 是否有效
+     */
+    private isValidState(state: InputState): boolean {
+        // 基本验证：状态对象必须存在
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!state) <span class="cstat-no" title="statement not covered" >return false;</span>
+&nbsp;
+        // 验证必要字段
+        if (!state.keyboard || !state.mouse || !state.joystick) {
+            return false;
+        }
+&nbsp;
+        // frameId is optional but recommended, so we don't validate it here
+&nbsp;
+        return true;
     }
-    
-    // frameId is optional but recommended, so we don't validate it here
-    
-    return true;
-  }
-  
-  /**
-   * 提取序列号
-   * @param state 状态对象
-   * @returns 序列号，如果frameId不是数字则返回NaN
-   */
-  private extractSequenceNumber(state: InputState): number {
-    // 只接受数字frameId作为序列号
-    // 如果frameId不是数字，则返回NaN
-    const frameId = (state as any).frameId;
-    return typeof frameId === 'number' ? frameId : NaN;
-  }
-  
-  /**
-   * 验证序列号单调性
-   * @param sequenceNumber 要验证的序列号
-   * @returns 是否有效
-   */
-  private isValidSequenceNumber(sequenceNumber: number): boolean {
-    // 如果序列号不是数字，直接拒绝
-    if (isNaN(sequenceNumber)) {
-      return false;
+&nbsp;
+    /**
+     * 提取序列号
+     * @param state 状态对象
+     * @returns 序列号，如果frameId不是数字则返回NaN
+     */
+    private extractSequenceNumber(state: InputState): number {
+        // 只接受数字frameId作为序列号
+        // 如果frameId不是数字，则返回NaN
+        const frameId = (state as any).frameId;
+        return typeof frameId === "number" ? frameId : NaN;
     }
-    
-    // If no state has been stored yet, any sequence number is valid
-    if (!this.latestState) {
-      return true;
+&nbsp;
+    /**
+     * 验证序列号单调性
+     * @param sequenceNumber 要验证的序列号
+     * @returns 是否有效
+     */
+    private isValidSequenceNumber(sequenceNumber: number): boolean {
+        // 如果序列号不是数字，直接拒绝
+        if (isNaN(sequenceNumber)) {
+            return false;
+        }
+&nbsp;
+        // If no state has been stored yet, any sequence number is valid
+        if (!this.latestState) {
+            return true;
+        }
+&nbsp;
+        // Get the sequence number of the latest stored state
+        const latestSequenceNumber = this.extractSequenceNumber(
+            this.latestState
+        );
+&nbsp;
+        // 序列号必须大于最后存储的序列号
+        // 不允许相同或更小的序列号
+        return sequenceNumber &gt; latestSequenceNumber;
     }
-    
-    // Get the sequence number of the latest stored state
-    const latestSequenceNumber = this.extractSequenceNumber(this.latestState);
-    
-    // 序列号必须大于最后存储的序列号
-    // 不允许相同或更小的序列号
-    return sequenceNumber &gt; latestSequenceNumber;
-  }
-  
-  /**
-   * 获取状态历史记录
-   * @returns 状态历史记录
-   */
-<span class="fstat-no" title="function not covered" >  getStateHistory(</span>): Array&lt;{
-    state: InputState;
-    receivedTime: number;
-    appliedTime: number | null;
-    sequenceNumber: number;
-  }&gt; {
-<span class="cstat-no" title="statement not covered" >    return [...this.stateHistory];</span>
-  }
-  
-  /**
-   * 获取最后应用的序列号
-   * @returns 最后应用的序列号
-   */
-<span class="fstat-no" title="function not covered" >  getLastAppliedSequenceNumber(</span>): number {
-<span class="cstat-no" title="statement not covered" >    return this.lastAppliedSequenceNumber;</span>
-  }
-  
-  /**
-   * 获取最后接收时间
-   * @returns 最后接收时间
-   */
-<span class="fstat-no" title="function not covered" >  getLastReceivedTime(</span>): number {
-<span class="cstat-no" title="statement not covered" >    return this.latestState ? Date.now() : 0;</span>
-  }
-  
-  /**
-   * 清空所有状态
-   */
-<span class="fstat-no" title="function not covered" >  clear(</span>): void {
-<span class="cstat-no" title="statement not covered" >    this.latestState = null;</span>
-<span class="cstat-no" title="statement not covered" >    this.stateHistory = [];</span>
-<span class="cstat-no" title="statement not covered" >    this.lastAppliedSequenceNumber = 0;</span>
-<span class="cstat-no" title="statement not covered" >    console.log('StateStore: All states cleared');</span>
-  }
+&nbsp;
+    /**
+     * 获取状态历史记录
+     * @returns 状态历史记录
+     */
+<span class="fstat-no" title="function not covered" >    getStateHistory(</span>): Array&lt;{
+        state: InputState;
+        receivedTime: number;
+        appliedTime: number | null;
+        sequenceNumber: number;
+    }&gt; {
+<span class="cstat-no" title="statement not covered" >        return [...this.stateHistory];</span>
+    }
+&nbsp;
+    /**
+     * 获取最后应用的序列号
+     * @returns 最后应用的序列号
+     */
+<span class="fstat-no" title="function not covered" >    getLastAppliedSequenceNumber(</span>): number {
+<span class="cstat-no" title="statement not covered" >        return this.lastAppliedSequenceNumber;</span>
+    }
+&nbsp;
+    /**
+     * 获取最后接收时间
+     * @returns 最后接收时间
+     */
+<span class="fstat-no" title="function not covered" >    getLastReceivedTime(</span>): number {
+<span class="cstat-no" title="statement not covered" >        return this.latestState ? Date.now() : 0;</span>
+    }
+&nbsp;
+    /**
+     * 清空所有状态
+     */
+<span class="fstat-no" title="function not covered" >    clear(</span>): void {
+<span class="cstat-no" title="statement not covered" >        this.latestState = null;</span>
+<span class="cstat-no" title="statement not covered" >        this.stateHistory = [];</span>
+<span class="cstat-no" title="statement not covered" >        this.lastAppliedSequenceNumber = 0;</span>
+<span class="cstat-no" title="statement not covered" >        console.log("StateStore: All states cleared");</span>
+    }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -673,7 +688,7 @@ export class StateStore {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T10:09:28.143Z
+                at 2026-01-23T16:14:19.606Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
