@@ -86,6 +86,9 @@ export function startInputExecutor() {
   
   console.log(`Starting input executor with interval: ${config.inputUpdateInterval}ms`);
   
+  // 启动安全控制器的超时检查
+  safetyController.startTimeoutCheck();
+  
   // 输入执行循环（125Hz）
   inputExecutorInterval = setInterval(() => {
     executeInput();
@@ -104,8 +107,8 @@ export function stopInputExecutor() {
     console.log('Input executor stopped');
   }
   
-  // 停止安全控制器的超时检查
-  safetyController.stopTimeoutCheck();
+  // 停止安全控制器的超时检查并销毁
+  safetyController.destroy();
 }
 
 /**

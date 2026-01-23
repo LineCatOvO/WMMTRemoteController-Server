@@ -31,6 +31,9 @@ export class SafetyController {
   // 异常清零计数
   private exceptionClearCount: number = 0;
   
+  // 是否已销毁标志
+  private isDestroyed: boolean = false;
+  
   /**
    * 构造函数
    * @param executorManager 执行器管理器
@@ -43,8 +46,7 @@ export class SafetyController {
       ...config
     };
     
-    // 启动超时检查
-    this.startTimeoutCheck();
+    // 不再自动启动超时检查，由外部调用startTimeoutCheck()手动启动
   }
   
   /**
@@ -97,7 +99,17 @@ export class SafetyController {
   /**
    * 启动超时检查
    */
-  private startTimeoutCheck(): void {
+  startTimeoutCheck(): void {
+    // 如果已销毁，直接返回
+    if (this.isDestroyed) {
+      return;
+    }
+    
+    // 如果已有定时器，先清除
+    if (this.timeoutTimer) {
+      clearInterval(this.timeoutTimer);
+    }
+    
     // 每100ms检查一次超时
     this.timeoutTimer = setInterval(() => {
       this.checkTimeout();
@@ -110,6 +122,11 @@ export class SafetyController {
    * 检查超时
    */
   private checkTimeout(): void {
+    // 如果已销毁，直接返回
+    if (this.isDestroyed) {
+      return;
+    }
+    
     const now = Date.now();
     const elapsed = now - this.lastValidStateTime;
     
@@ -193,6 +210,9 @@ export class SafetyController {
    * 销毁安全控制器
    */
   destroy(): void {
+    // 标记为已销毁
+    this.isDestroyed = true;
+    
     // 清除超时定时器
     this.stopTimeoutCheck();
     

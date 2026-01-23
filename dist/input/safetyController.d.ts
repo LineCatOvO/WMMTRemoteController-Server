@@ -17,6 +17,7 @@ export declare class SafetyController {
     private timeoutTimer;
     private clearCount;
     private exceptionClearCount;
+    private isDestroyed;
     /**
      * 构造函数
      * @param executorManager 执行器管理器
@@ -48,7 +49,7 @@ export declare class SafetyController {
     /**
      * 启动超时检查
      */
-    private startTimeoutCheck;
+    startTimeoutCheck(): void;
     /**
      * 检查超时
      */

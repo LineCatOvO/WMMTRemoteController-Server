@@ -20,13 +20,14 @@ class SafetyController {
         this.clearCount = 0;
         // 异常清零计数
         this.exceptionClearCount = 0;
+        // 是否已销毁标志
+        this.isDestroyed = false;
         this.executorManager = executorManager;
         this.config = {
             timeoutMs: 500, // 默认超时时间500ms
             ...config
         };
-        // 启动超时检查
-        this.startTimeoutCheck();
+        // 不再自动启动超时检查，由外部调用startTimeoutCheck()手动启动
     }
     /**
      * 记录有效状态接收时间
@@ -74,6 +75,14 @@ class SafetyController {
      * 启动超时检查
      */
     startTimeoutCheck() {
+        // 如果已销毁，直接返回
+        if (this.isDestroyed) {
+            return;
+        }
+        // 如果已有定时器，先清除
+        if (this.timeoutTimer) {
+            clearInterval(this.timeoutTimer);
+        }
         // 每100ms检查一次超时
         this.timeoutTimer = setInterval(() => {
             this.checkTimeout();
@@ -84,6 +93,10 @@ class SafetyController {
      * 检查超时
      */
     checkTimeout() {
+        // 如果已销毁，直接返回
+        if (this.isDestroyed) {
+            return;
+        }
         const now = Date.now();
         const elapsed = now - this.lastValidStateTime;
         if (elapsed > this.config.timeoutMs) {
@@ -158,6 +171,8 @@ class SafetyController {
      * 销毁安全控制器
      */
     destroy() {
+        // 标记为已销毁
+        this.isDestroyed = true;
         // 清除超时定时器
         this.stopTimeoutCheck();
         console.log('SafetyController: Destroyed, total clears:', this.clearCount);

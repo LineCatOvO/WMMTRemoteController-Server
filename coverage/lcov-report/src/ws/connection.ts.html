@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">13.63% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/22</span>
+                <span class='fraction'>3/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">13.63% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/22</span>
+                <span class='fraction'>3/22</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -124,32 +124,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,15 +158,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { setupHeartbeat } from '../heartbeat/heartbeat';
 import { handleMessage } from './router';
 &nbsp;
@@ -174,34 +174,34 @@ import { handleMessage } from './router';
  * 处理单个WebSocket连接的生命周期
  * @param ws WebSocket连接对象
  */
-export function handleConnection(ws: any) {
+export function <span class="fstat-no" title="function not covered" >handleConnection(</span>ws: any) {
   // 发送欢迎消息
-  ws.send(JSON.stringify({ type: 'welcome', message: 'Connected to WMMT Controller Server' }));
+<span class="cstat-no" title="statement not covered" >  ws.send(JSON.stringify({ type: 'welcome', message: 'Connected to WMMT Controller Server' }));</span>
   
   // 设置心跳检测
-  setupHeartbeat(ws);
+<span class="cstat-no" title="statement not covered" >  setupHeartbeat(ws);</span>
   
   // 处理客户端消息
-  ws.on('message', (data: any) =&gt; {
-    try {
+<span class="cstat-no" title="statement not covered" >  ws.on('message', <span class="fstat-no" title="function not covered" >(d</span>ata: any) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
       // 正确处理WebSocket消息数据类型
-      const messageStr = typeof data === 'string' ? <span class="branch-0 cbranch-no" title="branch not covered" >data </span>: data.toString();
-      const message = JSON.parse(messageStr);
-      handleMessage(ws, message);
+      const messageStr = <span class="cstat-no" title="statement not covered" >typeof data === 'string' ? data : data.toString();</span>
+      const message = <span class="cstat-no" title="statement not covered" >JSON.parse(messageStr);</span>
+<span class="cstat-no" title="statement not covered" >      handleMessage(ws, message);</span>
     } catch (error: any) {
 <span class="cstat-no" title="statement not covered" >      console.error('Error parsing message:', error);</span>
     }
   });
   
   // 客户端断开连接
-  ws.on('close', () =&gt; {
-    console.log('Client disconnected');
+<span class="cstat-no" title="statement not covered" >  ws.on('close', <span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    console.log('Client disconnected');</span>
     // 回退到安全状态
-    revertToSafeState();
+<span class="cstat-no" title="statement not covered" >    revertToSafeState();</span>
   });
   
   // 连接错误
-  ws.on('error', <span class="fstat-no" title="function not covered" >(e</span>rror: any) =&gt; {
+<span class="cstat-no" title="statement not covered" >  ws.on('error', <span class="fstat-no" title="function not covered" >(e</span>rror: any) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    console.error('Client error:', error);</span>
   });
 }
@@ -209,16 +209,16 @@ export function handleConnection(ws: any) {
 /**
  * 回退到安全状态
  */
-function revertToSafeState() {
-  console.log('Reverting to safe state');
+function <span class="fstat-no" title="function not covered" >revertToSafeState(</span>) {
+<span class="cstat-no" title="statement not covered" >  console.log('Reverting to safe state');</span>
   // 导入需要在运行时使用的模块，避免循环依赖
-  const { inputState } = require('../input/state');
-  const { safeState } = require('../input/safeState');
+  const { inputState } = <span class="cstat-no" title="statement not covered" >require('../input/state');</span>
+  const { safeState } = <span class="cstat-no" title="statement not covered" >require('../input/safeState');</span>
   
   // 重置输入状态到安全状态
-  inputState.keyboard = new Set(safeState.keyboard);
-  inputState.mouse = { ...safeState.mouse };
-  inputState.joystick = { ...safeState.joystick };
+<span class="cstat-no" title="statement not covered" >  inputState.keyboard = new Set(safeState.keyboard);</span>
+<span class="cstat-no" title="statement not covered" >  inputState.mouse = { ...safeState.mouse };</span>
+<span class="cstat-no" title="statement not covered" >  inputState.joystick = { ...safeState.joystick };</span>
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -226,7 +226,7 @@ function revertToSafeState() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T07:01:43.254Z
+                at 2026-01-23T08:24:22.960Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
