@@ -48,16 +48,18 @@ export class StateStore {
     storeState(state: InputState): boolean {
         // 验证状态完整性
         if (!this.isValidState(state)) {
-            console.error("StateStoreError: Invalid state received");
+            // 已注释，减少日志输出
+            // console.error("StateStoreError: Invalid state received");
             return false;
         }
 
         // 验证序列号单调性
         const sequenceNumber = this.extractSequenceNumber(state);
         if (!this.isValidSequenceNumber(sequenceNumber)) {
-            console.error(
-                `StateStoreError: Invalid sequence number ${sequenceNumber}, last applied: ${this.lastAppliedSequenceNumber}`
-            );
+            // 已注释，减少日志输出
+            // console.error(
+            //     `StateStoreError: Invalid sequence number ${sequenceNumber}, last applied: ${this.lastAppliedSequenceNumber}`
+            // );
             return false;
         }
 

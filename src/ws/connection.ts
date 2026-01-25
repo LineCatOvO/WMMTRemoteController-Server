@@ -20,6 +20,11 @@ export function handleConnection(ws: any) {
     // 设置心跳检测
     setupHeartbeat(ws);
 
+    // 更新终端监控器状态（客户端已连接）
+    if (process.env.NODE_ENV !== "test" && global && (global as any).terminalMonitor) {
+        (global as any).terminalMonitor.setClientConnected(true);
+    }
+
     // 处理客户端消息
     ws.on("message", (data: any) => {
         try {
@@ -70,6 +75,10 @@ export function handleConnection(ws: any) {
             // 只在非测试环境中打印日志，避免测试输出混乱
             if (process.env.NODE_ENV !== "test") {
                 console.log("Client disconnected");
+                // 更新终端监控器状态
+                if (global && (global as any).terminalMonitor) {
+                    (global as any).terminalMonitor.setClientConnected(false);
+                }
             }
             // 回退到安全状态，无论是否在测试环境中
             try {

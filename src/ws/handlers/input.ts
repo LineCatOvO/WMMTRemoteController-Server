@@ -12,7 +12,8 @@ export function handleInput(ws: any, message: InputMessage) {
 
     // 检查状态存储是否可用
     if (!stateStore) {
-        console.error("InputHandlerError: StateStore not available");
+        // 已注释，减少日志输出
+        // console.error("InputHandlerError: StateStore not available");
         return;
     }
 
@@ -20,11 +21,11 @@ export function handleInput(ws: any, message: InputMessage) {
     const stored = stateStore.storeState(message.data);
 
     if (stored) {
-        // 记录详细的输入数据日志（仅当日志不是空状态时）
-        const logMessage = formatInputMessageLog(message);
-        if (logMessage) {
-            console.log(logMessage);
-        }
+        // 记录详细的输入数据日志（已注释，减少日志输出）
+        // const logMessage = formatInputMessageLog(message);
+        // if (logMessage) {
+        //     console.log(logMessage);
+        // }
 
         // 发送ACK消息
         const ackMessage = {
@@ -37,10 +38,12 @@ export function handleInput(ws: any, message: InputMessage) {
         };
 
         try {
-            console.log("Sending ACK to client:", JSON.stringify(ackMessage));
+            // 已注释，减少日志输出
+            // console.log("Sending ACK to client:", JSON.stringify(ackMessage));
             ws.send(JSON.stringify(ackMessage));
         } catch (error) {
-            console.error("InputHandlerError: Error sending ACK:", error);
+            // 已注释，减少日志输出
+            // console.error("InputHandlerError: Error sending ACK:", error);
         }
     } else {
         // 发送错误ACK消息
@@ -55,18 +58,19 @@ export function handleInput(ws: any, message: InputMessage) {
         };
 
         try {
-            console.log(
-                "Sending error ACK to client:",
-                JSON.stringify(errorAckMessage)
-            );
+            // 已注释，减少日志输出
+            // console.log(
+            //     "Sending error ACK to client:",
+            //     JSON.stringify(errorAckMessage)
+            // );
             ws.send(JSON.stringify(errorAckMessage));
-            console.error(
-                `InputHandlerError: Error ACK sent for sequence ${
-                    message.data?.frameId || Date.now()
-                }`
-            );
+            // 已注释，减少日志输出
+            // console.error(
+            //     `InputHandlerError: Error ACK sent for sequence ${message.data?.frameId || Date.now()}`
+            // );
         } catch (error) {
-            console.error("InputHandlerError: Error sending error ACK:", error);
+            // 已注释，减少日志输出
+            // console.error("InputHandlerError: Error sending error ACK:", error);
         }
     }
 }

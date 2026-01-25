@@ -33,8 +33,8 @@ export function handleMessage(ws: any, message: WsMessage) {
             return;
         }
 
-        // 记录接收到的消息
-        console.log("Received message from client:", JSON.stringify(message));
+        // 记录接收到的消息（已注释，减少日志输出）
+        // console.log("Received message from client:", JSON.stringify(message));
 
         const handler = handlers[message.type];
 
