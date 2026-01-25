@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/config/loadConfig.ts</title>
+    <title>Code coverage report for src/utils/errorManager.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/config</a> loadConfig.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utils</a> errorManager.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52% </span>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/25</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>7/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">40% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>2/5</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/24</span>
+                <span class='fraction'>7/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -123,47 +123,12 @@
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -175,75 +140,116 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as fs from 'fs';
-import * as path from 'path';
-import { Config } from '../types/ws';
-import { config as defaultConfig } from './config';
-import { validateConfig } from './validate';
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// 错误事件管理器，用于收集和分发服务器错误
 &nbsp;
 /**
- * 从文件加载配置
- * @param configPath 配置文件路径
- * @returns 合并后的配置对象
+ * 错误类型定义
  */
-export function loadConfigFromFile(configPath?: string): Config {
-  let loadedConfig: Partial&lt;Config&gt; = {};
-  
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (configPath) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      // 解析绝对路径
-      const absolutePath = <span class="cstat-no" title="statement not covered" >path.isAbsolute(configPath) ? configPath : path.resolve(process.cwd(), configPath);</span>
-      
-      // 检查文件是否存在
-<span class="cstat-no" title="statement not covered" >      if (fs.existsSync(absolutePath)) {</span>
-        // 读取并解析配置文件
-        const configContent = <span class="cstat-no" title="statement not covered" >fs.readFileSync(absolutePath, 'utf8');</span>
-        const parsedConfig = <span class="cstat-no" title="statement not covered" >JSON.parse(configContent);</span>
-        
-        // 验证配置有效性
-<span class="cstat-no" title="statement not covered" >        if (validateConfig(parsedConfig)) {</span>
-<span class="cstat-no" title="statement not covered" >          loadedConfig = parsedConfig;</span>
-        } else {
-<span class="cstat-no" title="statement not covered" >          console.warn(`Invalid configuration in file: ${absolutePath}, using default config`);</span>
+export interface ServerError {
+    type: string;
+    code: string;
+    message: string;
+    details?: any;
+}
+&nbsp;
+// 存储WebSocket连接的集合
+const wsConnections = new Set&lt;any&gt;();
+&nbsp;
+/**
+ * 注册WebSocket连接
+ * @param ws WebSocket连接对象
+ */
+export function registerWsConnection(ws: any) {
+    wsConnections.add(ws);
+    
+    // 连接关闭时移除
+    ws.on('close', () =&gt; {
+        wsConnections.delete(ws);
+    });
+}
+&nbsp;
+/**
+ * 发送错误消息给所有连接的客户端
+ * @param error 错误对象
+ */
+export function <span class="fstat-no" title="function not covered" >broadcastError(</span>error: ServerError) {
+    const errorMsg = <span class="cstat-no" title="statement not covered" >JSON.stringify(error);</span>
+<span class="cstat-no" title="statement not covered" >    console.log("Broadcasting error to all clients:", errorMsg);</span>
+    
+    // 遍历所有连接，发送错误消息
+<span class="cstat-no" title="statement not covered" >    wsConnections.forEach(<span class="fstat-no" title="function not covered" >(w</span>s) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            ws.send(errorMsg);</span>
+        } catch (sendError) {
+<span class="cstat-no" title="statement not covered" >            console.error("Error sending error message to client:", sendError);</span>
+            // 移除无效连接
+<span class="cstat-no" title="statement not covered" >            wsConnections.delete(ws);</span>
         }
-      } else {
-<span class="cstat-no" title="statement not covered" >        console.warn(`Config file not found: ${absolutePath}, using default config`);</span>
-      }
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error(`Error loading config file: ${error}, using default config`);</span>
-    }
-  }
-  
-  // 合并默认配置和加载的配置
-  return {
-    ...defaultConfig,
-    ...loadedConfig
-  };
+    });
 }
 &nbsp;
 /**
- * 解析命令行参数，获取配置文件路径
- * @returns 配置文件路径，如果没有指定则返回undefined
+ * 发送游戏手柄错误
+ * @param message 错误消息
+ * @param details 错误详情
  */
-export function getConfigPathFromArgs(): string | undefined {
-  // 简单的命令行参数解析，查找 --config 或 -c 参数
-  const args = process.argv.slice(2);
-  for (let i = 0; i &lt; args.length; i++) {
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if ((args[i] === '--config' || args[i] === '-c') &amp;&amp; i &lt; args.length - 1) {</span>
-<span class="cstat-no" title="statement not covered" >      return args[i + 1];</span>
-    }
-  }
-  return undefined;
-}
-&nbsp;</pre></td></tr></table></pre>
+export function <span class="fstat-no" title="function not covered" >sendGamepadError(</span>message: string, details?: any) {
+    const error: ServerError = <span class="cstat-no" title="statement not covered" >{</span>
+        type: "error",
+        code: "GAMEPAD_ERROR",
+        message: message,
+        details: details
+    };
+    
+<span class="cstat-no" title="statement not covered" >    broadcastError(error);</span>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

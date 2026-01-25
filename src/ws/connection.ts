@@ -1,11 +1,15 @@
 import { setupHeartbeat } from "../heartbeat/heartbeat";
 import { handleMessage } from "./router";
+import { registerWsConnection } from "../utils/errorManager";
 
 /**
  * 处理单个WebSocket连接的生命周期
  * @param ws WebSocket连接对象
  */
 export function handleConnection(ws: any) {
+    // 注册连接到错误管理器
+    registerWsConnection(ws);
+    
     // 发送欢迎消息
     const welcomeMsg = {
         type: "welcome",

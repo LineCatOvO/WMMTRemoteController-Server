@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.58% </span>
+                <span class="strong">74.54% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/53</span>
+                <span class='fraction'>41/55</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.16% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/48</span>
+                <span class='fraction'>40/50</span>
             </div>
         
             
@@ -231,12 +231,18 @@
 <a name='L166'></a><a href='#L166'>166</a>
 <a name='L167'></a><a href='#L167'>167</a>
 <a name='L168'></a><a href='#L168'>168</a>
-<a name='L169'></a><a href='#L169'>169</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -250,7 +256,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -266,7 +272,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -297,6 +303,7 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -318,6 +325,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
@@ -399,66 +408,68 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { config } from '../config/config';
-import { inputState } from './state';
-import { KeyboardExecutor } from './keyboard';
-import { MouseExecutor } from './mouse';
-import { JoystickExecutor } from './joystick';
-import { SafetyController } from './safetyController';
-import { InputExecutor, InputExecutorManager } from './interfaces';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { config } from "../config/config";
+import { inputState } from "./state";
+import { KeyboardExecutor } from "./keyboard";
+import { MouseExecutor } from "./mouse";
+import { JoystickExecutor } from "./joystick";
+import { GamepadExecutor } from "./gamepad";
+import { SafetyController } from "./safetyController";
+import { InputExecutor, InputExecutorManager } from "./interfaces";
 &nbsp;
 /**
  * 输入执行器管理器实现
  */
 export class DefaultInputExecutorManager implements InputExecutorManager {
-  private executors: InputExecutor[] = [];
-  
-  /**
-   * 添加输入执行器
-   * @param executor 输入执行器
-   */
-  addExecutor(executor: InputExecutor): void {
-    this.executors.push(executor);
-  }
-  
-  /**
-   * 移除输入执行器
-   * @param executor 输入执行器
-   */
-<span class="fstat-no" title="function not covered" >  removeExecutor(</span>executor: InputExecutor): void {
-<span class="cstat-no" title="statement not covered" >    this.executors = this.executors.filter(<span class="fstat-no" title="function not covered" >e </span>=&gt; <span class="cstat-no" title="statement not covered" >e !== executor)</span>;</span>
-  }
-  
-  /**
-   * 应用完整输入状态到所有执行器
-   * @param state 输入状态
-   */
-  applyState(state: any): void {
-    this.executors.forEach(executor =&gt; executor.applyState(state));
-  }
-  
-  /**
-   * 应用输入增量到所有执行器
-   * @param delta 输入增量
-   */
-<span class="fstat-no" title="function not covered" >  applyDelta(</span>delta: any): void {
-<span class="cstat-no" title="statement not covered" >    this.executors.forEach(<span class="fstat-no" title="function not covered" >executor </span>=&gt; <span class="cstat-no" title="statement not covered" >executor.applyDelta(delta))</span>;</span>
-  }
-  
-  /**
-   * 应用输入事件到所有执行器
-   * @param event 输入事件
-   */
-<span class="fstat-no" title="function not covered" >  applyEvent(</span>event: any): void {
-<span class="cstat-no" title="statement not covered" >    this.executors.forEach(<span class="fstat-no" title="function not covered" >executor </span>=&gt; <span class="cstat-no" title="statement not covered" >executor.applyEvent(event))</span>;</span>
-  }
-  
-  /**
-   * 重置所有执行器
-   */
-<span class="fstat-no" title="function not covered" >  reset(</span>): void {
-<span class="cstat-no" title="statement not covered" >    this.executors.forEach(<span class="fstat-no" title="function not covered" >executor </span>=&gt; <span class="cstat-no" title="statement not covered" >executor.reset())</span>;</span>
-  }
+    private executors: InputExecutor[] = [];
+&nbsp;
+    /**
+     * 添加输入执行器
+     * @param executor 输入执行器
+     */
+    addExecutor(executor: InputExecutor): void {
+        this.executors.push(executor);
+    }
+&nbsp;
+    /**
+     * 移除输入执行器
+     * @param executor 输入执行器
+     */
+<span class="fstat-no" title="function not covered" >    removeExecutor(</span>executor: InputExecutor): void {
+<span class="cstat-no" title="statement not covered" >        this.executors = this.executors.filter(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >e !== executor)</span>;</span>
+    }
+&nbsp;
+    /**
+     * 应用完整输入状态到所有执行器
+     * @param state 输入状态
+     */
+    applyState(state: any): void {
+        this.executors.forEach((executor) =&gt; executor.applyState(state));
+    }
+&nbsp;
+    /**
+     * 应用输入增量到所有执行器
+     * @param delta 输入增量
+     */
+<span class="fstat-no" title="function not covered" >    applyDelta(</span>delta: any): void {
+<span class="cstat-no" title="statement not covered" >        this.executors.forEach(<span class="fstat-no" title="function not covered" >(e</span>xecutor) =&gt; <span class="cstat-no" title="statement not covered" >executor.applyDelta(delta))</span>;</span>
+    }
+&nbsp;
+    /**
+     * 应用输入事件到所有执行器
+     * @param event 输入事件
+     */
+<span class="fstat-no" title="function not covered" >    applyEvent(</span>event: any): void {
+<span class="cstat-no" title="statement not covered" >        this.executors.forEach(<span class="fstat-no" title="function not covered" >(e</span>xecutor) =&gt; <span class="cstat-no" title="statement not covered" >executor.applyEvent(event))</span>;</span>
+    }
+&nbsp;
+    /**
+     * 重置所有执行器
+     */
+<span class="fstat-no" title="function not covered" >    reset(</span>): void {
+<span class="cstat-no" title="statement not covered" >        this.executors.forEach(<span class="fstat-no" title="function not covered" >(e</span>xecutor) =&gt; <span class="cstat-no" title="statement not covered" >executor.reset())</span>;</span>
+    }
 }
 &nbsp;
 // 创建输入执行器管理器实例
@@ -468,6 +479,7 @@ const executorManager = new DefaultInputExecutorManager();
 executorManager.addExecutor(new KeyboardExecutor());
 executorManager.addExecutor(new MouseExecutor());
 executorManager.addExecutor(new JoystickExecutor());
+executorManager.addExecutor(new GamepadExecutor());
 &nbsp;
 // 创建安全控制器
 const safetyController = new SafetyController(executorManager);
@@ -480,47 +492,49 @@ let inputExecutorInterval: NodeJS.Timeout | null = null;
  * @returns 定时器ID，用于后续清理
  */
 export function startInputExecutor() {
-  // 如果已经在运行，则先停止
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (inputExecutorInterval) {
-<span class="cstat-no" title="statement not covered" >    clearInterval(inputExecutorInterval);</span>
-  }
-  
-  console.log(`Starting input executor with interval: ${config.inputUpdateInterval}ms`);
-  
-  // 启动安全控制器的超时检查
-  safetyController.startTimeoutCheck();
-  
-  // 输入执行循环（125Hz）
-  inputExecutorInterval = setInterval(() =&gt; {
-    executeInput();
-  }, config.inputUpdateInterval);
-  
-  return inputExecutorInterval;
+    // 如果已经在运行，则先停止
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (inputExecutorInterval) {
+<span class="cstat-no" title="statement not covered" >        clearInterval(inputExecutorInterval);</span>
+    }
+&nbsp;
+    console.log(
+        `Starting input executor with interval: ${config.inputUpdateInterval}ms`
+    );
+&nbsp;
+    // 启动安全控制器的超时检查
+    safetyController.startTimeoutCheck();
+&nbsp;
+    // 输入执行循环（125Hz）
+    inputExecutorInterval = setInterval(() =&gt; {
+        executeInput();
+    }, config.inputUpdateInterval);
+&nbsp;
+    return inputExecutorInterval;
 }
 &nbsp;
 /**
  * 停止输入执行循环
  */
 export function stopInputExecutor() {
-  if (inputExecutorInterval) {
-    clearInterval(inputExecutorInterval);
-    inputExecutorInterval = null;
-    console.log('Input executor stopped');
-  }
-  
-  // 停止安全控制器的超时检查并销毁
-  safetyController.destroy();
+    if (inputExecutorInterval) {
+        clearInterval(inputExecutorInterval);
+        inputExecutorInterval = null;
+        console.log("Input executor stopped");
+    }
+&nbsp;
+    // 停止安全控制器的超时检查并销毁
+    safetyController.destroy();
 }
 &nbsp;
 /**
  * 执行输入
  */
 function executeInput() {
-  // 应用当前输入状态到所有执行器
-  executorManager.applyState(inputState);
-  
-  // 记录有效状态时间
-  safetyController.recordValidState(inputState);
+    // 应用当前输入状态到所有执行器
+    executorManager.applyState(inputState);
+&nbsp;
+    // 记录有效状态时间
+    safetyController.recordValidState(inputState);
 }
 &nbsp;
 /**
@@ -528,7 +542,7 @@ function executeInput() {
  * @returns 输入执行器管理器实例
  */
 export function getExecutorManager(): InputExecutorManager {
-  return executorManager;
+    return executorManager;
 }
 &nbsp;
 /**
@@ -536,14 +550,14 @@ export function getExecutorManager(): InputExecutorManager {
  * @returns 安全控制器实例
  */
 export function <span class="fstat-no" title="function not covered" >getSafetyController(</span>): SafetyController {
-<span class="cstat-no" title="statement not covered" >  return safetyController;</span>
+<span class="cstat-no" title="statement not covered" >    return safetyController;</span>
 }
 &nbsp;
 /**
  * 触发安全清零
  */
 export function <span class="fstat-no" title="function not covered" >triggerSafetyClear(</span>): void {
-<span class="cstat-no" title="statement not covered" >  safetyController.triggerSafetyClear();</span>
+<span class="cstat-no" title="statement not covered" >    safetyController.triggerSafetyClear();</span>
 }
 &nbsp;
 /**
@@ -551,14 +565,14 @@ export function <span class="fstat-no" title="function not covered" >triggerSafe
  * @param reason 异常原因
  */
 export function <span class="fstat-no" title="function not covered" >triggerExceptionClear(</span>reason: string): void {
-<span class="cstat-no" title="statement not covered" >  safetyController.triggerExceptionClear(reason);</span>
+<span class="cstat-no" title="statement not covered" >    safetyController.triggerExceptionClear(reason);</span>
 }
 &nbsp;
 /**
  * 处理WebSocket断开连接
  */
 export function <span class="fstat-no" title="function not covered" >handleDisconnect(</span>): void {
-<span class="cstat-no" title="statement not covered" >  safetyController.handleDisconnect();</span>
+<span class="cstat-no" title="statement not covered" >    safetyController.handleDisconnect();</span>
 }
 &nbsp;
 /**
@@ -566,15 +580,16 @@ export function <span class="fstat-no" title="function not covered" >handleDisco
  * @param state 有效状态
  */
 export function <span class="fstat-no" title="function not covered" >recordValidState(</span>state: any): void {
-<span class="cstat-no" title="statement not covered" >  safetyController.recordValidState(state);</span>
-}</pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >    safetyController.recordValidState(state);</span>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T16:14:19.606Z
+                at 2026-01-25T14:29:34.222Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

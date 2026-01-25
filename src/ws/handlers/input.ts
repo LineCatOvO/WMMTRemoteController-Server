@@ -17,8 +17,11 @@ export function handleInput(ws: any, message: InputMessage) {
         return;
     }
 
+    // 确保message.data存在
+    const inputData = message.data || {};
+    
     // 存储状态
-    const stored = stateStore.storeState(message.data);
+    const stored = stateStore.storeState(inputData);
 
     if (stored) {
         // 记录详细的输入数据日志（已注释，减少日志输出）
@@ -31,7 +34,7 @@ export function handleInput(ws: any, message: InputMessage) {
         const ackMessage = {
             type: "ack",
             data: {
-                sequenceNumber: message.data?.frameId || Date.now(),
+                sequenceNumber: inputData?.frameId || Date.now(),
                 timestamp: Date.now(),
                 status: "success",
             },
@@ -50,7 +53,7 @@ export function handleInput(ws: any, message: InputMessage) {
         const errorAckMessage = {
             type: "ack",
             data: {
-                sequenceNumber: message.data?.frameId || Date.now(),
+                sequenceNumber: inputData?.frameId || Date.now(),
                 timestamp: Date.now(),
                 status: "error",
                 reason: "Invalid state",
@@ -66,7 +69,7 @@ export function handleInput(ws: any, message: InputMessage) {
             ws.send(JSON.stringify(errorAckMessage));
             // 已注释，减少日志输出
             // console.error(
-            //     `InputHandlerError: Error ACK sent for sequence ${message.data?.frameId || Date.now()}`
+            //     `InputHandlerError: Error ACK sent for sequence ${inputData?.frameId || Date.now()}`
             // );
         } catch (error) {
             // 已注释，减少日志输出

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">21.05% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>4/19</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">21.05% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>4/19</span>
             </div>
         
             
@@ -112,7 +112,22 @@
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -124,6 +139,8 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,24 +163,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ConfigGetMessage, ConfigSetMessage } from '../../types/ws';
-import { config } from '../../config/config';
-import { validateConfig } from '../../config/validate';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ConfigGetMessage, ConfigSetMessage } from "../../types/ws";
+import { config } from "../../config/config";
+import { validateConfig } from "../../config/validate";
 &nbsp;
 /**
  * 处理配置获取消息
@@ -171,8 +201,10 @@ import { validateConfig } from '../../config/validate';
  * @param message 配置获取消息
  */
 export function <span class="fstat-no" title="function not covered" >handleConfigGet(</span>ws: any, message: ConfigGetMessage) {
-  // 发送当前配置
-<span class="cstat-no" title="statement not covered" >  ws.send(JSON.stringify({ type: 'config', data: config }));</span>
+    // 发送当前配置
+    const configMsg = <span class="cstat-no" title="statement not covered" >{ type: "config", data: config };</span>
+<span class="cstat-no" title="statement not covered" >    console.log("Sending config to client:", JSON.stringify(configMsg));</span>
+<span class="cstat-no" title="statement not covered" >    ws.send(JSON.stringify(configMsg));</span>
 }
 &nbsp;
 /**
@@ -181,43 +213,56 @@ export function <span class="fstat-no" title="function not covered" >handleConfi
  * @param message 配置设置消息
  */
 export function <span class="fstat-no" title="function not covered" >handleConfigSet(</span>ws: any, message: ConfigSetMessage) {
-  // 合并新配置到当前配置
-  const updatedConfig = <span class="cstat-no" title="statement not covered" >{ ...config, ...message.data };</span>
-  
-  // 验证配置有效性
-<span class="cstat-no" title="statement not covered" >  if (validateConfig(updatedConfig)) {</span>
-    // 应用新配置
-<span class="cstat-no" title="statement not covered" >    Object.assign(config, updatedConfig);</span>
-    
-    // 发送确认消息
-<span class="cstat-no" title="statement not covered" >    ws.send(JSON.stringify({ </span>
-      type: 'config_ack', 
-      message: 'Config updated successfully',
-      data: config 
-    }));
-    
-<span class="cstat-no" title="statement not covered" >    console.log('Config updated:', config);</span>
-    
-    // 如果更新了输入更新间隔，需要重新设置定时器
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (message.data.inputUpdateInterval &amp;&amp; message.data.inputUpdateInterval !== config.inputUpdateInterval) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`Input update interval changed to ${config.inputUpdateInterval}ms`);</span>
-      // 注意：在实际实现中，需要保存定时器ID以便清除和重新创建
+    // 合并新配置到当前配置
+    const updatedConfig = <span class="cstat-no" title="statement not covered" >{ ...config, ...message.data };</span>
+&nbsp;
+    // 验证配置有效性
+<span class="cstat-no" title="statement not covered" >    if (validateConfig(updatedConfig)) {</span>
+        // 应用新配置
+<span class="cstat-no" title="statement not covered" >        Object.assign(config, updatedConfig);</span>
+&nbsp;
+        // 发送确认消息
+        const ackMsg = <span class="cstat-no" title="statement not covered" >{</span>
+            type: "config_ack",
+            message: "Config updated successfully",
+            data: config,
+        };
+<span class="cstat-no" title="statement not covered" >        console.log("Sending config ack to client:", JSON.stringify(ackMsg));</span>
+<span class="cstat-no" title="statement not covered" >        ws.send(JSON.stringify(ackMsg));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        console.log("Config updated:", config);</span>
+&nbsp;
+        // 如果更新了输入更新间隔，需要重新设置定时器
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (</span>
+            message.data.inputUpdateInterval &amp;&amp;
+            message.data.inputUpdateInterval !== config.inputUpdateInterval
+        ) {
+<span class="cstat-no" title="statement not covered" >            console.log(</span>
+                `Input update interval changed to ${config.inputUpdateInterval}ms`
+            );
+            // 注意：在实际实现中，需要保存定时器ID以便清除和重新创建
+        }
+    } else {
+        // 配置无效，发送错误消息
+        const errorConfigMsg = <span class="cstat-no" title="statement not covered" >{</span>
+            type: "config_error",
+            message: "Invalid configuration",
+        };
+<span class="cstat-no" title="statement not covered" >        console.log(</span>
+            "Sending config error to client:",
+            JSON.stringify(errorConfigMsg)
+        );
+<span class="cstat-no" title="statement not covered" >        ws.send(JSON.stringify(errorConfigMsg));</span>
     }
-  } else {
-    // 配置无效，发送错误消息
-<span class="cstat-no" title="statement not covered" >    ws.send(JSON.stringify({ </span>
-      type: 'config_error', 
-      message: 'Invalid configuration' 
-    }));
-  }
-}</pre></td></tr></table></pre>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-23T16:14:19.606Z
+                at 2026-01-25T14:29:34.222Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

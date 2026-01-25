@@ -6,6 +6,8 @@ import { handleConfigGet, handleConfigSet } from "./handlers/config";
 import { handlePing } from "./handlers/ping";
 import { handleWelcome } from "./handlers/welcome";
 import { handleLatencyProbe } from "./handlers/latencyProbe";
+import { handleState } from "./handlers/state";
+import { handleEvent } from "./handlers/event";
 
 // 消息处理器映射
 const handlers: Record<string, (ws: any, message: any) => void> = {
@@ -13,6 +15,8 @@ const handlers: Record<string, (ws: any, message: any) => void> = {
     input: handleInput,
     input_delta: handleInputDelta,
     input_event: handleInputEvent,
+    state: handleState,
+    event: handleEvent,
     config_get: handleConfigGet,
     config_set: handleConfigSet,
     latency_probe: handleLatencyProbe,

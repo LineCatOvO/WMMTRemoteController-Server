@@ -1,5 +1,6 @@
 import { InputExecutor } from "./interfaces";
 import { InputState, InputDelta, InputEvent } from "../types/ws";
+import { sendGamepadError } from "../utils/errorManager";
 
 const keySender = require("node-key-sender");
 
@@ -76,10 +77,10 @@ export class GamepadExecutor implements InputExecutor {
                 try {
                     keySender.releaseKey(Array.from(buttonsToRelease));
                 } catch (error) {
-                    console.error(
-                        "GamepadError: Error releasing buttons:",
-                        error
-                    );
+                    const errorMsg = `Error releasing buttons: ${error instanceof Error ? error.message : String(error)}`;
+                    console.error("GamepadError:", errorMsg);
+                    // 发送错误消息给客户端
+                    sendGamepadError(errorMsg, { error: error instanceof Error ? error.stack : String(error) });
                 }
             }
 
@@ -98,10 +99,10 @@ export class GamepadExecutor implements InputExecutor {
                         keySender.sendKey(buttonsToPressAll);
                     }
                 } catch (error) {
-                    console.error(
-                        "GamepadError: Error pressing buttons:",
-                        error
-                    );
+                    const errorMsg = `Error pressing buttons: ${error instanceof Error ? error.message : String(error)}`;
+                    console.error("GamepadError:", errorMsg);
+                    // 发送错误消息给客户端
+                    sendGamepadError(errorMsg, { error: error instanceof Error ? error.stack : String(error) });
                 }
             }
 
