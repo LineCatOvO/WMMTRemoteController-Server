@@ -37,7 +37,7 @@ export function handleInput(ws: any, message: InputMessage) {
         };
 
         try {
-            console.log('Sending ACK to client:', JSON.stringify(ackMessage));
+            console.log("Sending ACK to client:", JSON.stringify(ackMessage));
             ws.send(JSON.stringify(ackMessage));
         } catch (error) {
             console.error("InputHandlerError: Error sending ACK:", error);
@@ -55,7 +55,10 @@ export function handleInput(ws: any, message: InputMessage) {
         };
 
         try {
-            console.log('Sending error ACK to client:', JSON.stringify(errorAckMessage));
+            console.log(
+                "Sending error ACK to client:",
+                JSON.stringify(errorAckMessage)
+            );
             ws.send(JSON.stringify(errorAckMessage));
             console.error(
                 `InputHandlerError: Error ACK sent for sequence ${

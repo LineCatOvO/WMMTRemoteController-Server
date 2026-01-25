@@ -11,10 +11,11 @@ export function handleConnection(ws: any) {
         type: "welcome",
         message: "Connected to WMMT Controller Server",
     };
-    console.log('Sending welcome message to client:', JSON.stringify(welcomeMsg));
-    ws.send(
+    console.log(
+        "Sending welcome message to client:",
         JSON.stringify(welcomeMsg)
     );
+    ws.send(JSON.stringify(welcomeMsg));
 
     // 设置心跳检测
     setupHeartbeat(ws);
@@ -55,10 +56,11 @@ export function handleConnection(ws: any) {
                 code: "PARSE_ERROR",
                 message: "Invalid JSON format",
             };
-            console.log('Sending error message to client:', JSON.stringify(errorMsg));
-            ws.send(
+            console.log(
+                "Sending error message to client:",
                 JSON.stringify(errorMsg)
             );
+            ws.send(JSON.stringify(errorMsg));
         }
     });
 
