@@ -2,114 +2,6 @@
 // 使用ANSI转义序列实现动态终端监控
 
 /**
- * 终端控制工具类，封装ANSI转义序列
- */
-class TerminalControl {
-    /**
-     * 隐藏光标
-     */
-    static hideCursor(): void {
-        process.stdout.write('\x1b[?25l');
-    }
-
-    /**
-     * 显示光标
-     */
-    static showCursor(): void {
-        process.stdout.write('\x1b[?25h');
-    }
-
-    /**
-     * 清屏
-     */
-    static clearScreen(): void {
-        process.stdout.write('\x1b[2J');
-    }
-
-    /**
-     * 将光标移动到屏幕左上角
-     */
-    static moveCursorToTop(): void {
-        process.stdout.write('\x1b[H');
-    }
-
-    /**
-     * 清当前行
-     */
-    static clearLine(): void {
-        process.stdout.write('\x1b[2K');
-    }
-
-    /**
-     * 清除屏幕并将光标移动到左上角（不推荐使用，会导致闪烁）
-     */
-    static resetScreen(): void {
-        process.stdout.write('\x1b[2J\x1b[H');
-    }
-
-    /**
-     * 将光标移动到屏幕左上角
-     */
-    static moveToTop(): void {
-        process.stdout.write('\x1b[H');
-    }
-
-    /**
-     * 逐行写入内容，不清屏，只覆盖
-     * @param lines 要写入的行数组
-     */
-    static writeLines(lines: string[]): void {
-        // 光标移动到顶部
-        process.stdout.write('\x1b[H');
-        
-        // 逐行写入
-        lines.forEach(line => {
-            // 清除当前行，然后写入新内容
-            process.stdout.write('\x1b[2K');
-            process.stdout.write(line + '\n');
-        });
-    }
-
-    /**
-     * 差分写入内容，只更新变化的行
-     * @param lines 要写入的行数组
-     * @param lastLines 上一帧的行数组
-     * @returns 更新后的行数组
-     */
-    static diffWriteLines(lines: string[], lastLines: string[]): string[] {
-        // 确保行数一致，补全或截断
-        const maxLines = Math.max(lines.length, lastLines.length);
-        const resultLines = [...lines];
-        
-        // 补全行数
-        while (resultLines.length < maxLines) {
-            resultLines.push('');
-        }
-        
-        // 光标移动到顶部
-        process.stdout.write('\x1b[H');
-        
-        // 只更新变化的行
-        for (let i = 0; i < maxLines; i++) {
-            const currentLine = i < lines.length ? lines[i] : '';
-            const lastLine = i < lastLines.length ? lastLines[i] : '';
-            
-            // 只更新变化的行
-            if (currentLine !== lastLine) {
-                // 移动到指定行首
-                process.stdout.write(`\x1b[${i + 1};1H`);
-                // 清除当前行
-                process.stdout.write('\x1b[2K');
-                // 写入新内容
-                process.stdout.write(currentLine);
-            }
-        }
-        
-        return resultLines;
-    }
-}
-
-/**
  * 终端状态面板类
  */
 export class TerminalMonitor {
@@ -120,7 +12,8 @@ export class TerminalMonitor {
     private frameCount: number;
     private lastRenderTime: number;
     private clientConnected: boolean;
-    private lastLines: string[]; // 上一帧的行内容，用于差分渲染
+    private panelLines: string[]; // 当前面板行内容
+    private panelHeight: number; // 面板高度（行数）
 
     /**
      * 构造函数
@@ -134,7 +27,8 @@ export class TerminalMonitor {
         this.frameCount = 0;
         this.lastRenderTime = 0;
         this.clientConnected = false;
-        this.lastLines = []; // 初始化上一帧行数组
+        this.panelLines = []; // 初始化面板行内容
+        this.panelHeight = 12; // 固定面板高度
     }
 
     /**
@@ -142,7 +36,7 @@ export class TerminalMonitor {
      */
     start(): void {
         // 隐藏光标
-        TerminalControl.hideCursor();
+        process.stdout.write('\x1b[?25l');
 
         // 设置渲染间隔
         this.intervalId = setInterval(() => {
@@ -173,11 +67,14 @@ export class TerminalMonitor {
             this.intervalId = null;
         }
 
-        // 恢复光标显示
-        TerminalControl.showCursor();
+        // 显示光标
+        process.stdout.write('\x1b[?25h');
 
-        // 清屏
-        TerminalControl.resetScreen();
+        // 清空面板内容
+        this.clearPanel();
+
+        // 在面板底部生成新的prompt输入行
+        process.stdout.write('\n');
 
         console.log('Terminal monitor stopped');
     }
@@ -237,7 +134,83 @@ export class TerminalMonitor {
         lines.push(`│ Joystick: ${joystickInfo.padEnd(36)} │`);
         lines.push('└─────────────────────────────────────────────────┘');
 
-        // 使用差分写入更新屏幕，只更新变化的行
-        this.lastLines = TerminalControl.diffWriteLines(lines, this.lastLines);
+        // 只在面板内容变化时更新
+        if (!this.areLinesEqual(lines, this.panelLines)) {
+            this.updatePanel(lines);
+            this.panelLines = lines;
+        }
+    }
+
+    /**
+     * 检查两行数组是否相等
+     * @param lines1 第一行数组
+     * @param lines2 第二行数组
+     * @returns 是否相等
+     */
+    private areLinesEqual(lines1: string[], lines2: string[]): boolean {
+        if (lines1.length !== lines2.length) {
+            return false;
+        }
+        for (let i = 0; i < lines1.length; i++) {
+            if (lines1[i] !== lines2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 更新面板内容
+     * @param lines 新的面板行内容
+     */
+    private updatePanel(lines: string[]): void {
+        // 保存当前光标位置
+        process.stdout.write('\x1b[s');
+        
+        // 移动到终端底部
+        process.stdout.write('\x1b[9999;1H');
+        
+        // 向上移动足够的行数，为面板腾出空间
+        process.stdout.write(`\x1b[${this.panelHeight}A`);
+        
+        // 写入面板内容
+        for (let i = 0; i < this.panelHeight; i++) {
+            // 清除当前行
+            process.stdout.write('\x1b[2K');
+            // 写入行内容
+            if (i < lines.length) {
+                process.stdout.write(lines[i]);
+            }
+            // 移动到下一行
+            process.stdout.write('\n');
+        }
+        
+        // 恢复光标位置
+        process.stdout.write('\x1b[u');
+    }
+
+    /**
+     * 清空面板内容
+     */
+    private clearPanel(): void {
+        // 保存当前光标位置
+        process.stdout.write('\x1b[s');
+        
+        // 移动到终端底部
+        process.stdout.write('\x1b[9999;1H');
+        
+        // 向上移动足够的行数，覆盖面板区域
+        process.stdout.write(`\x1b[${this.panelHeight}A`);
+        
+        // 清空面板内容
+        for (let i = 0; i < this.panelHeight; i++) {
+            // 清除当前行
+            process.stdout.write('\x1b[2K');
+            // 移动到下一行
+            process.stdout.write('\n');
+        }
+        
+        // 恢复光标位置
+        process.stdout.write('\x1b[u');
     }
 }
