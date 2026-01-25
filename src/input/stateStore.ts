@@ -122,6 +122,11 @@ export class StateStore {
             return false;
         }
 
+        // 验证可选字段（如果存在，必须是有效的Set）
+        if (state.gamepad && !(state.gamepad instanceof Set)) {
+            return false;
+        }
+
         // frameId is optional but recommended, so we don't validate it here
 
         return true;

@@ -50,6 +50,7 @@ export interface InputState {
     frameId?: number;
     runtimeStatus?: "ok" | "degraded" | "rollback";
     keyboard: Set<string>;
+    gamepad?: Set<string>; // 添加游戏手柄按钮支持
     mouse: {
         x: number;
         y: number;

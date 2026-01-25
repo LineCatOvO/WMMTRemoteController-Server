@@ -3,6 +3,7 @@ import { inputState } from './state';
 import { KeyboardExecutor } from './keyboard';
 import { MouseExecutor } from './mouse';
 import { JoystickExecutor } from './joystick';
+import { GamepadExecutor } from './gamepad';
 import { SafetyController } from './safetyController';
 import { InputExecutor, InputExecutorManager } from './interfaces';
 
@@ -67,6 +68,7 @@ const executorManager = new DefaultInputExecutorManager();
 executorManager.addExecutor(new KeyboardExecutor());
 executorManager.addExecutor(new MouseExecutor());
 executorManager.addExecutor(new JoystickExecutor());
+executorManager.addExecutor(new GamepadExecutor());
 
 // 创建安全控制器
 const safetyController = new SafetyController(executorManager);

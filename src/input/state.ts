@@ -3,6 +3,7 @@ import { InputState } from "../types/ws";
 // 输入状态管理
 export const inputState: InputState = {
     keyboard: new Set<string>(), // 存储当前按下的键
+    gamepad: new Set<string>(), // 存储当前按下的游戏手柄按钮
     mouse: {
         x: 0,
         y: 0,

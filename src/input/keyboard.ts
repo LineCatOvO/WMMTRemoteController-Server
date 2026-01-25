@@ -91,20 +91,21 @@ export class KeyboardExecutor implements InputExecutor {
         // 当前使用的node-key-sender库不支持持续按键，这里我们先清空所有按键，然后重新按下需要的键
         console.log('KeyboardEvent: Releasing keys:', Array.from(keysToRelease));
         
-        // 清空所有按键（通过重置当前状态）
-        this.currentKeyboardState.clear();
+        try {
+          keySender.releaseKey(Array.from(keysToRelease));
+        } catch (error) {
+          console.error('KeyboardError: Error releasing keys:', error);
+        }
       }
       
       // 然后按下需要按下的键
-      if (keysToPress.size > 0 || this.currentKeyboardState.size === 0) {
+      if (keysToPress.size > 0) {
         // 如果需要按下新键，或者当前状态为空（刚刚清空），则重新按下所有需要的键
-        const keysToPressAll = Array.from(newState);
+        const keysToPressAll = Array.from(keysToPress);
         
         // 只记录非空状态变化
         if (keysToPressAll.length > 0) {
           console.log('KeyboardEvent: Pressing keys:', keysToPressAll);
-        } else {
-          console.log('KeyboardEvent: Releasing all keys');
         }
         
         try {
