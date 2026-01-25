@@ -7,5 +7,7 @@ import { WelcomeMessage } from '../../types/ws';
  */
 export function handleWelcome(ws: any, message: WelcomeMessage) {
   // 发送欢迎消息
-  ws.send(JSON.stringify({ type: 'welcome', message: 'Connected to WMMT Controller Server' }));
+  const welcomeMsg = { type: 'welcome', message: 'Connected to WMMT Controller Server' };
+  console.log('Sending welcome message to client:', JSON.stringify(welcomeMsg));
+  ws.send(JSON.stringify(welcomeMsg));
 }

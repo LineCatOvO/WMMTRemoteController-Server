@@ -31,6 +31,9 @@ export function handleMessage(ws: any, message: WsMessage) {
       return;
     }
     
+    // 记录接收到的消息
+    console.log('Received message from client:', JSON.stringify(message));
+    
     const handler = handlers[message.type];
     
     if (handler) {
@@ -39,28 +42,34 @@ export function handleMessage(ws: any, message: WsMessage) {
       } catch (error) {
         console.error(`Error handling message type ${message.type}:`, error);
         // 发送错误消息给客户端
-        ws.send(JSON.stringify({
+        const errorMsg = {
           type: 'error',
           code: 'INTERNAL_ERROR',
           message: 'Error processing message'
-        }));
+        };
+        console.log('Sending error message to client:', JSON.stringify(errorMsg));
+        ws.send(JSON.stringify(errorMsg));
       }
     } else {
       console.log('Unknown message type:', message.type);
       // 发送错误消息
-      ws.send(JSON.stringify({
+      const errorMsg = {
         type: 'error',
         code: 'UNSUPPORTED_MESSAGE_TYPE',
         message: `Unsupported message type: ${message.type}`
-      }));
+      };
+      console.log('Sending error message to client:', JSON.stringify(errorMsg));
+      ws.send(JSON.stringify(errorMsg));
     }
   } catch (error) {
     console.error(`Error in handleMessage:`, error, 'Original message:', message);
     // 发送通用错误消息给客户端
-    ws.send(JSON.stringify({
+    const errorMsg = {
       type: 'error',
       code: 'INVALID_MESSAGE',
       message: 'Invalid message format'
-    }));
+    };
+    console.log('Sending generic error message to client:', JSON.stringify(errorMsg));
+    ws.send(JSON.stringify(errorMsg));
   }
 }

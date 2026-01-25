@@ -7,5 +7,7 @@ import { PingMessage } from '../../types/ws';
  */
 export function handlePing(ws: any, message: PingMessage) {
   // 发送pong响应
-  ws.send(JSON.stringify({ type: 'pong' }));
+  const pongMsg = { type: 'pong' };
+  console.log('Sending pong response to client:', JSON.stringify(pongMsg));
+  ws.send(JSON.stringify(pongMsg));
 }

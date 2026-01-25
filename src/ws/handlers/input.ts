@@ -37,8 +37,8 @@ export function handleInput(ws: any, message: InputMessage) {
         };
 
         try {
+            console.log('Sending ACK to client:', JSON.stringify(ackMessage));
             ws.send(JSON.stringify(ackMessage));
-            // 移除重复的ACK发送日志
         } catch (error) {
             console.error("InputHandlerError: Error sending ACK:", error);
         }
@@ -55,6 +55,7 @@ export function handleInput(ws: any, message: InputMessage) {
         };
 
         try {
+            console.log('Sending error ACK to client:', JSON.stringify(errorAckMessage));
             ws.send(JSON.stringify(errorAckMessage));
             console.error(
                 `InputHandlerError: Error ACK sent for sequence ${

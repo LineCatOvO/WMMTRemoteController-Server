@@ -9,7 +9,9 @@ import { validateConfig } from '../../config/validate';
  */
 export function handleConfigGet(ws: any, message: ConfigGetMessage) {
   // 发送当前配置
-  ws.send(JSON.stringify({ type: 'config', data: config }));
+  const configMsg = { type: 'config', data: config };
+  console.log('Sending config to client:', JSON.stringify(configMsg));
+  ws.send(JSON.stringify(configMsg));
 }
 
 /**
@@ -27,11 +29,13 @@ export function handleConfigSet(ws: any, message: ConfigSetMessage) {
     Object.assign(config, updatedConfig);
     
     // 发送确认消息
-    ws.send(JSON.stringify({ 
+    const ackMsg = { 
       type: 'config_ack', 
       message: 'Config updated successfully',
       data: config 
-    }));
+    };
+    console.log('Sending config ack to client:', JSON.stringify(ackMsg));
+    ws.send(JSON.stringify(ackMsg));
     
     console.log('Config updated:', config);
     
@@ -42,9 +46,11 @@ export function handleConfigSet(ws: any, message: ConfigSetMessage) {
     }
   } else {
     // 配置无效，发送错误消息
-    ws.send(JSON.stringify({ 
+    const errorConfigMsg = { 
       type: 'config_error', 
       message: 'Invalid configuration' 
-    }));
+    };
+    console.log('Sending config error to client:', JSON.stringify(errorConfigMsg));
+    ws.send(JSON.stringify(errorConfigMsg));
   }
 }

@@ -7,11 +7,13 @@ import { handleMessage } from "./router";
  */
 export function handleConnection(ws: any) {
     // 发送欢迎消息
+    const welcomeMsg = {
+        type: "welcome",
+        message: "Connected to WMMT Controller Server",
+    };
+    console.log('Sending welcome message to client:', JSON.stringify(welcomeMsg));
     ws.send(
-        JSON.stringify({
-            type: "welcome",
-            message: "Connected to WMMT Controller Server",
-        })
+        JSON.stringify(welcomeMsg)
     );
 
     // 设置心跳检测
@@ -48,12 +50,14 @@ export function handleConnection(ws: any) {
                 data
             );
             // 发送解析错误消息给客户端
+            const errorMsg = {
+                type: "error",
+                code: "PARSE_ERROR",
+                message: "Invalid JSON format",
+            };
+            console.log('Sending error message to client:', JSON.stringify(errorMsg));
             ws.send(
-                JSON.stringify({
-                    type: "error",
-                    code: "PARSE_ERROR",
-                    message: "Invalid JSON format",
-                })
+                JSON.stringify(errorMsg)
             );
         }
     });
